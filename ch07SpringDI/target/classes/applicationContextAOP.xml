@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<!-- 
+		AspectJ 의 Pointcut 표현식
+		
+		execution(Integer kr.spring.ch01..WriteArticleService.write(..))
+		리턴 타입이 Integer인 WriteArticleService의 파라미터가 0개 이상인 write() 메서드
+		
+		execution(public void set*(..))
+		리턴 타입이 void이고 메서드 이름이 set으로 시작하고, 파라미터가 0개 이상인 메서드를 호출
+		
+	 -->
+	<!-- 공통 기능을 갖고 있는 클래스 빈 객체 설정 -->
+	<bean id="myFirstAdvice" class="kr.spring.ch20.pojp.MyFirstAdvice"/>
+	<!-- 핵심 기능을 구현한 클래스 빈 객체 설정 -->
+	<bean id="product" class="kr.spring.product.Product"/>
+	
+	
+	
+	
+</beans>
+
