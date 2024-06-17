@@ -33,4 +33,7 @@
 	<beans:bean id="newArticleController" class="kr.spring.ch03.controller.NewArticleController"/>
 	<beans:bean id="newArticleService" class="kr.spring.ch03.service.NewArticleService"/>
 	
+	<!-- @CookieValue 어노테이션을 이용한 쿠키 매핑 -->
+	<beans:bean id="cookieController" class="kr.spring.ch04.controller.CookieController"/>
+	
 </beans:beans>

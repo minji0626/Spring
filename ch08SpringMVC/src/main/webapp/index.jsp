@@ -15,5 +15,9 @@
 <br>
 <a href="${pageContext.request.contextPath}/article/newArticle.do">Article</a>
 <br>
+<a href="${pageContext.request.contextPath}/cookie/make.do">CookieController - make.do</a>
+<br>
+<a href="${pageContext.request.contextPath}/cookie/view.do">CookieController - view.do</a>
+<br>
 </body>
 </html>
