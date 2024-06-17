@@ -19,4 +19,18 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+	
+	<!-- MVC 기본 설정 -->
+	<beans:bean id="helloController" class="kr.spring.ch01.controller.HelloController"/>
+	
+	<!-- 파라미터로 전송된 데이터 처리 -->
+	<beans:bean id="searchController" class="kr.spring.ch02.controller.SearchController"/>
+	
+	<!-- @Autowired 사용을 위해서 -->
+	<context:annotation-config/>
+	
+	<!-- 전송된 데이터 자바빈(VO)에 담기 -->
+	<beans:bean id="newArticleController" class="kr.spring.ch03.controller.NewArticleController"/>
+	<beans:bean id="newArticleService" class="kr.spring.ch03.service.NewArticleService"/>
+	
 </beans:beans>
