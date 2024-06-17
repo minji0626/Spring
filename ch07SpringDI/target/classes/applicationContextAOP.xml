@@ -18,12 +18,56 @@
 		execution(public void set*(..))
 		리턴 타입이 void이고 메서드 이름이 set으로 시작하고, 파라미터가 0개 이상인 메서드를 호출
 		
+		execution(* com.spring.ch01.*.*())
+		com.spring.ch01 패키지의 파라미터가 없는 모든 메서드 호출
+		
+		execution(* com.spring.ch01..*.*(..))
+		com.spring.ch01 패키지 및 하위 패키지에 있는 파라미터가 0개 이상인 메서드 호출
+		
+		execution(* get*(*))
+		이름이 get으로 시작하고 1개의 파라미터를 갖는 메서드 호출
+		
+		execution(* get*(*,*))
+		이름이 get으로 시작하고 2개의 파라미터를 갖는 메서드 호출
+		
+		execution(* read*(Integer,*))
+		메서드 이름이 read로 시작하고, 첫 번째 파라미터 타입이 Integer이며, 1개 이상의 파라미터를 갖는 메서드 호출
 	 -->
 	<!-- 공통 기능을 갖고 있는 클래스 빈 객체 설정 -->
-	<bean id="myFirstAdvice" class="kr.spring.ch20.pojp.MyFirstAdvice"/>
+	<bean id="myFirstAdvice" class="kr.spring.ch20.pojo.MyFirstAdvice"/>
+	
 	<!-- 핵심 기능을 구현한 클래스 빈 객체 설정 -->
 	<bean id="product" class="kr.spring.product.Product"/>
 	
+	<!-- AOP 설정 -->
+	<aop:config>
+		<!-- 공통기능을 갖고 있는 클래스 지정 -->	
+		<aop:aspect id="aspect" ref="myFirstAdvice">
+			<!-- 핵심 기능을 실행할 때 어느 시점에 공통 기능을 적용할지 지정 -->
+			<!-- 핵심 기능 지정 -->
+			<aop:pointcut expression="execution(public String launch())" id="publicMethod"/>
+			<!-- 공통 기능 지정 -->
+			<!-- Advice 종류 - before -->
+			<!-- <aop:before method="before" pointcut-ref="publicMethod"/> -->
+			
+			<!-- Advice 종류 - after-returning -->
+			<!-- 반환하는 데이터를 msg에 넣어서 넘겨라 -->
+			<!-- <aop:after-returning method="afterReturning" pointcut-ref="publicMethod" 
+			returning="msg"/> -->
+			
+			<!-- Advice 종류 - after-throwing -->
+			<!-- <aop:after-throwing method="afterThrowing" pointcut-ref="publicMethod" 
+			throwing="ex"/> -->
+			
+			<!-- Advice 종류 - after -->
+			<!-- <aop:after method="after" pointcut-ref="publicMethod"  /> -->
+			
+			<!-- Advice 종류 - Around After -->
+			<aop:around method="around" pointcut-ref="publicMethod"/>
+			
+			
+		</aop:aspect>
+	</aop:config>
 	
 	
 	

@@ -5,6 +5,8 @@ public class Product {
 	public String launch() {
 		System.out.println("launch() 메서드 출력하기");
 		
+//		System.out.println(20/0);
+		
 		return "[상품 출시]";
 	}
 
