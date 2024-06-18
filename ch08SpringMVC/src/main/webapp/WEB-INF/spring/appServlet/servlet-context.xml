@@ -36,4 +36,7 @@
 	<!-- @CookieValue 어노테이션을 이용한 쿠키 매핑 -->
 	<beans:bean id="cookieController" class="kr.spring.ch04.controller.CookieController"/>
 	
+	<!-- 파라미터로 전달된 데이터를 자바빈에 담기 -->
+	<beans:bean class="kr.spring.ch05.controller.GameSearchController"/>
+	<beans:bean class="kr.spring.ch05.service.SearchService"/>
 </beans:beans>
