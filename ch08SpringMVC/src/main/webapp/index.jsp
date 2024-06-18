@@ -28,7 +28,13 @@
 <a href="${pageContext.request.contextPath}/search/main.do">Game Search Controller</a>
 <br>
 
-<a href="${pageContext.request.contextPath}/account/create.do">회원 가입</a>
+<a href="${pageContext.request.contextPath}/account/create.do">New Account</a>
+<br>
+
+<a href="${pageContext.request.contextPath}/login/login.do">Login</a>
+<br>
+
+<a href="${pageContext.request.contextPath}/report/submitReport.do">File Upload</a>
 <br>
 </body>
 </html>
