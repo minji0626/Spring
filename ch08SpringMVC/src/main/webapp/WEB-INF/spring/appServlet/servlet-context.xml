@@ -39,4 +39,7 @@
 	<!-- 파라미터로 전달된 데이터를 자바빈에 담기 -->
 	<beans:bean class="kr.spring.ch05.controller.GameSearchController"/>
 	<beans:bean class="kr.spring.ch05.service.SearchService"/>
+	
+	<beans:bean class="kr.spring.ch06.controller.CreateAccountController"/>
+	<beans:bean class="kr.spring.ch06.validator.MemberValidator"/>
 </beans:beans>
