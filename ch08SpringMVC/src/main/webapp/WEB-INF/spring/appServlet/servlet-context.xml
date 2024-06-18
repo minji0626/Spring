@@ -41,5 +41,17 @@
 	<beans:bean class="kr.spring.ch05.service.SearchService"/>
 	
 	<beans:bean class="kr.spring.ch06.controller.CreateAccountController"/>
-	<beans:bean class="kr.spring.ch06.validator.MemberValidator"/>
+	
+	<!-- validation.properties 설정하기 (resource-bundel) -->
+	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<beans:property name="basenames">
+			<beans:list>
+						 <!-- 폴더명 . 파일명 -->
+				<beans:value>messages.validation</beans:value>
+			</beans:list>
+		</beans:property>	
+	</beans:bean>
+	
+	
+	
 </beans:beans>

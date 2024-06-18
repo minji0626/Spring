@@ -21,20 +21,25 @@ public class MemberValidator implements Validator{
 	public void validate(Object target, Errors errors) {
 		MemberVO vo = (MemberVO)target;
 		if(vo.getId() == null || vo.getId().trim().isEmpty()) {
+			errors.rejectValue("id", "required");
 							// 필드	에러코드	에러 문구	
-			errors.rejectValue("id", null, "ID는 필수 항목입니다.");
+			//errors.rejectValue("id", null, "ID는 필수 항목입니다.");
 		}
 		if(vo.getName() == null || vo.getName().trim().isEmpty()) {
-			errors.rejectValue("name", null, "이름은 필수 항목입니다.");
+			errors.rejectValue("name", "required");
+			//errors.rejectValue("name", null, "이름은 필수 항목입니다.");
 		}
 		if(vo.getZipcode() == null || vo.getZipcode().trim().isEmpty()) {
-			errors.rejectValue("zipcode", null, "우편번호는 필수 항목입니다.");
+			errors.rejectValue("zipcode", "required");
+			//errors.rejectValue("zipcode", null, "우편번호는 필수 항목입니다.");
 		}
 		if(vo.getAddress1() == null || vo.getAddress1().trim().isEmpty()) {
-			errors.rejectValue("address1", null, "주소는 필수 항목입니다.");
+			errors.rejectValue("address1", "required");
+			//errors.rejectValue("address1", null, "주소는 필수 항목입니다.");
 		}
 		if(vo.getAddress2() == null || vo.getAddress2().trim().isEmpty()) {
-			errors.rejectValue("address2", null, "상세 주소는 필수 항목입니다.");
+			errors.rejectValue("address2", "required");
+			//errors.rejectValue("address2", null, "상세 주소는 필수 항목입니다.");
 		}
 	}
 	
