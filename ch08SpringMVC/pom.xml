@@ -130,6 +130,16 @@
 		    <artifactId>hibernate-validator</artifactId>
 			<version>6.0.18.Final</version> 
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+			<version>3.13</version> 
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+			<version>2.9.5</version> 
+		</dependency>
 		<!-- 라이브러리 추가 끝 -->
 	
 		<!-- Test -->

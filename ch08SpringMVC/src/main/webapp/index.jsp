@@ -50,6 +50,10 @@ a{
 <a href="${pageContext.request.contextPath}/file.do">Download file</a>
 <br>
 
+<a href="${pageContext.request.contextPath}/pageRanksExcel.do">Download Page Ranks Excel</a>
+<br>
+<a href="${pageContext.request.contextPath}/pageJson.do">Json Page</a>
+<br>
 
 </body>
 </html>
