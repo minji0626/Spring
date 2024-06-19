@@ -18,7 +18,13 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1" />
 	</beans:bean>
+	
+	<!-- 파일 다운로드를 위한 viewResolver 설정 0순위로 설정(늘 먼저 동작) -->
+	<!-- 빈의 이름과 뷰의 이름이 동일하다면 클래스더라도 해당 클래스를 호출 -->
+	<beans:bean id="viewResolver" p:order = "0"
+				class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
 	
 	<!-- MVC 기본 설정 -->
 	<beans:bean id="helloController" class="kr.spring.ch01.controller.HelloController"/>
@@ -68,5 +74,13 @@
 	
 	<!-- 파일 업로드 -->
 	<beans:bean class="kr.spring.ch08.controller.SubmitReportController"/>
+	
+	<!-- 어노테이션을 이용한 유효성 체크 -->
+	<beans:bean class="kr.spring.ch09.controller.MemberWriteController"/>
+	
+	<!-- 파일 다운로드 -->
+	<beans:bean class="kr.spring.ch10.controller.DownloadController"/>
+	<beans:bean id="download" class="kr.spring.ch10.view.DownloadView"/>
+	
 	
 </beans:beans>

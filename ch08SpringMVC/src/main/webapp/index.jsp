@@ -5,6 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Spring MVC</title>
+<style type="text/css">
+a{
+	text-decoration : none;
+	color: black;
+	font-weight:bold;
+}
+</style>
 </head>
 <body>
 <a href="${pageContext.request.contextPath}/hello.do">Hello Controller</a>
@@ -36,5 +43,13 @@
 
 <a href="${pageContext.request.contextPath}/report/submitReport.do">File Upload</a>
 <br>
+
+<a href="${pageContext.request.contextPath}/member/write.do">MemberWriteController</a>
+<br>
+
+<a href="${pageContext.request.contextPath}/file.do">Download file</a>
+<br>
+
+
 </body>
 </html>

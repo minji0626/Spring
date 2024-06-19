@@ -34,9 +34,8 @@ public class SubmitReportController {
 	
 	// 폼 등록하기
 	@PostMapping("/report/submitReport.do")
-	public String submit(@ModelAttribute("report") SubmitReportVO submitReportVO, BindingResult result) throws IllegalStateException, IOException {
-		
-		
+	public String submit(@ModelAttribute("report") SubmitReportVO submitReportVO, BindingResult result)
+															throws IllegalStateException, IOException {
 		// 전송된 데이터 유효성 체크하기
 		new SubmitReportValidator().validate(submitReportVO, result);
 		// 유효성 체크 결과 오류가 있으면 폼을 호출
