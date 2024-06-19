@@ -11,7 +11,7 @@
 	<div class="page-main">
 		<h2>게시판 목록</h2>
 		<div class="align-right">
-			<input type="button" value="글쓰기" onclick="loaction.href='insert.do'">
+			<input type="button" value="글쓰기" onclick="location.href='insert.do'">
 		</div>
 	</div>
 </body>

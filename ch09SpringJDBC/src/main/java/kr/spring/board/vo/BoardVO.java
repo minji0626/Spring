@@ -2,6 +2,7 @@ package kr.spring.board.vo;
 
 import java.sql.Date;
 
+
 public class BoardVO {
 	
 	private int num;
@@ -10,7 +11,7 @@ public class BoardVO {
 	private String passwd;
 	private String content;
 	private Date reg_date;
-	
+
 	public int getNum() {
 		return num;
 	}
