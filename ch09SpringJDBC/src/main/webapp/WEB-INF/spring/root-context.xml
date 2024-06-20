@@ -44,15 +44,15 @@
 	<bean name="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
  		<property name="dataSource" ref="dataSource"/>
  	</bean>
-	
-	<!-- NamedParameterJdbcTemplate 객체 생성 -->
- 	<bean name="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
- 		<constructor-arg ref="dataSource"/>
- 	</bean>
  	
  	<!-- JDBC 기반 트랜잭션 관리자 설정 -->
  	<bean id="transactionManager" p:dataSource-ref="dataSource"
  		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager" />
+	
+	<!-- 어노테이션 방식으로 처리할 때 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+
  		  
 </beans>
 

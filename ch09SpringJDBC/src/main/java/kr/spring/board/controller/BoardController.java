@@ -1,22 +1,31 @@
 package kr.spring.board.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import kr.spring.board.service.BoardService;
 import kr.spring.board.vo.BoardVO;
+import kr.spring.util.PagingUtil;
 
 @Controller
 public class BoardController {
+	
+	@Autowired
+	private BoardService boardService;
 	
 	/*
 	 로그 레벨
@@ -39,10 +48,28 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/list.do")
-	public ModelAndView process() {
+	// value = pageNum, 따로 들어오는 값이 없다면 1유지
+	public ModelAndView process(@RequestParam(value = "pageNum", defaultValue = "1") int currentPage) {
+		
+		int count = boardService.getBoardCount();
+		
+		log.debug("<<count>> : "+ count );
+		
+		// 페이지 처리하기
+		PagingUtil page = new PagingUtil(currentPage, count, 20,10, "list.do");
+		
+		// 목록 호출
+		List<BoardVO> list = null;
+		
+		if(count > 0) {
+			list = boardService.getBoardList(page.getStartRow(), page.getEndRow());
+		}
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("selectList");
+		mav.addObject("count", count);
+		mav.addObject("list", list);
+		mav.addObject("page",page.getPage());
 		
 		return mav;
 	}
@@ -55,7 +82,7 @@ public class BoardController {
 	
 	// 폼 입력하기
 	@PostMapping("/insert.do")
-	public String submit(@ModelAttribute @Valid BoardVO vo, BindingResult result) {
+	public String submit(@Valid BoardVO vo, BindingResult result) {
 		
 		log.debug("<<BoardVO>> : " + vo);
 		
@@ -64,7 +91,52 @@ public class BoardController {
 			return form();
 		}
 		
+		// 글 등록하기
+		boardService.insertBoard(vo);
+		
 		return "redirect:/list.do";
 	}
+	
+	// 글 상세보기
+	@RequestMapping("/detail.do")
+	public ModelAndView detail(int num) {
+		log.debug("<<num>> : " + num);
+		
+		BoardVO board = boardService.getBoard(num);
+							//  뷰 이름			속성명	속성값
+		return new ModelAndView("selectDetail", "board",board);
+	}
+
+	// 수정하는 폼
+	@GetMapping("/update.do")
+	public String formUpdate(int num, Model model) {
+		model.addAttribute("boardVO", boardService.getBoard(num));
+		return "updateForm";
+	}
+	
+	// 수정하기(전송된 데이터 처리)
+	@PostMapping("/update.do")
+	public String submitUpdate(@Valid BoardVO vo, BindingResult result) {
+		
+		log.debug("<<UpdateBoardVO>> : "+ vo);
+		
+		if(result.hasErrors()) {
+			return "updateForm";
+		}
+		
+		// DB에서 저장된 
+		BoardVO db_board = boardService.getBoard(vo.getNum());
+		
+		if(!db_board.getPasswd().equals(vo.getPasswd())) {
+			result.rejectValue("passwd", "invalidPassword");
+			return "updateForm";
+			}
+		
+		boardService.updateBoard(vo);
+		
+		return "redirect:/list.do";
+	}
+	
+	
 	
 }
