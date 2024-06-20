@@ -2,15 +2,33 @@ package kr.spring.board.vo;
 
 import java.sql.Date;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
+/*
+@NotNull : null만 허용하지 않음
+@NotBlank: null, ""(빈문자열)," "(공백)을 허용하지 않음
+@NotEmpty : null과 ""(빈문자열)을 허용하지 않음
+ * */
 
 public class BoardVO {
 	
 	private int num;
+	
+	@NotBlank
 	private String writer;
+	
+	@NotEmpty
 	private String title;
+	
+	@NotBlank
 	private String passwd;
+	
+	@NotEmpty
 	private String content;
+	
 	private Date reg_date;
+	
 
 	public int getNum() {
 		return num;

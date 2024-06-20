@@ -16,22 +16,22 @@
 				<li>
 					<form:label path="writer">작성자</form:label>
 					<form:input path="writer"/>
-					<form:errors path="writer" cssClass="errror-color"/>
+					<form:errors element="div" path="writer" cssClass="error-color"/>
 				</li>
 				<li>
 					<form:label path="title">제목</form:label>
 					<form:input path="title"/>
-					<form:errors path="title" cssClass="errror-color"/>
+					<form:errors element="div" path="title" cssClass="error-color"/>
 				</li>
 				<li>
 					<form:label path="passwd">비밀번호</form:label>
 					<form:password path="passwd"/>
-					<form:errors path="passwd" cssClass="errror-color"/>
+					<form:errors element="div" path="passwd" cssClass="error-color"/>
 				</li>
 				<li>
 					<form:label path="content" >내용</form:label>
 					<form:textarea path="content" cols="5" rows="20"/>
-					<form:errors path="content" cssClass="errror-color"/>
+					<form:errors element="div" path="content" cssClass="error-color"/>
 				</li>
 			</ul>
 			<div class="align-center">

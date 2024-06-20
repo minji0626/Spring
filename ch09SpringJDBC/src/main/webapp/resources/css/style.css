@@ -75,23 +75,24 @@ label{
 input[type="submit"],input[type="button"] {
     background-color: white;
     color: black;
-    border: 1px solid #007bff; 
-    padding: 7px; 
-    border-radius: 10px; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease; 
-    width: 15%;
+    border: 1px solid #c7c6cb;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 12%;
 }
 input[type="submit"]:hover, input[type="button"]:hover {
-    background-color: #007bff;
+    background-color: #c7c6cb;
     color:white;
 }
 input[type="text"],input[type="password"],input[type="email"],textarea {
-    width: 60%; 
-    padding: 8px; 
-    border: 1px solid #ccc; 
-    border-radius: 5px; 
-    box-sizing: border-box; 
+   width: 60%;
+    padding: 8px 10px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    resize: none;
 }
 form {
     margin-top: 20px;
@@ -99,15 +100,15 @@ form {
 button{
 	background-color: white;
     color: black;
-    border: 1px solid #007bff; 
-    padding: 7px; 
-    border-radius: 20px; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease; 
-    width: 50%;
+    border: 1px solid #c7c6cb;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 12%;
 }
 button:hover {
-    background-color: #007bff;
+    background-color: #c7c6cb;
     color:white;
 }
 a {
@@ -136,4 +137,9 @@ a:hover {
 
 #detail_page > li {
     margin-bottom: 5px; /* 각 항목 사이의 간격 조정 */
+}
+
+.error-color {
+	color: red;
+	font-size: 11px;
 }
