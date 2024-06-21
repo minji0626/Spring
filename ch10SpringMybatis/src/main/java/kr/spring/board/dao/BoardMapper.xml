@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.board.dao.BoardDAO">
+	<!-- 총 레코드 수 구하는 sql -->
+	<!-- 반환 타입 명시(클래스형으로 작성) alias가 있기 때문에 integer로 작성이 가능-->
+	<!-- BoardDAOImpl에서 명시했던 id와 동일하게 작성! -->
+	<select  id="selectBoardCount" resultType="integer">
+		SELECT COUNT(*) FROM aboard
+	</select >
+	
+	<!-- 목록 호출  -->
+	<!-- 전달하는 타입(map)도 명시 -->
+	<!-- 컬럼명=자바빈 동일하다면 자동 mapping  -->
+	<!-- 반환 타입도 명시 (실제 데이터가 담기는 빈을 명시해야 한다) -->
+	<!-- 비교 연산자 에러 -> xml의 특수문자(태그 명시에 사용)이기 때문에 에러가 발생함 
+		 해당하는 블럭이 xml 문법 체크를 하지 않도록 설정을 해줘야한다.
+		 cdatasection -> xml 문법 체크를 하지 않도록 설정하는 태그 -->
+	<!-- start, end 키를 사용 
+		 #{start} , #{end} 로 명시해야 한다 (Mybatis 규칙)-->
+	<select id="selectBoardList" parameterType="map" resultType="boardVO">
+	SELECT * FROM(SELECT a.*,rownum rnum FROM (SELECT * FROM aboard ORDER BY num DESC)a) 
+	<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+	]]>
+	</select>
+	
+	<!-- 글 작성하기 -->
+	<insert id="insertBoard" parameterType="boardVO">
+		INSERT INTO aboard (num, writer, title, passwd, content, reg_date) VALUES(aboard_seq.nextval,#{writer},#{title},#{passwd},#{content},SYSDATE)
+	</insert>
+	
+	<!-- 해당하는 글 불러오기 -->
+	<select id="selectDetail" parameterType="integer" resultType="boardVO">
+		SELECT * FROM aboard WHERE num = #{num}
+	</select>
+	
+	<!-- 글 수정하기 -->
+	<update id="updateBoard" parameterType="boardVO">
+		UPDATE aboard SET writer=#{writer}, title=#{title}, content=#{content} WHERE num=#{num}
+	</update>
+	
+	<!-- 글 삭제하기 -->
+	<delete id="deleteBoard" parameterType="integer">
+		DELETE FROM aboard WHERE num=#{num}
+	</delete>
+ </mapper>
