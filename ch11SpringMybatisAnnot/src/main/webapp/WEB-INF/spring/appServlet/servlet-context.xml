@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- @Controller 어노테이션을 이용한 컨트롤러를 사용하기 위한 설정 -->
+	<annotation-driven/>
+	
+	<!-- 정적 파일을 요청할 때 /resources/** 패턴의 모든 요청을
+	     location에 지정한 경로 /resources/에 있는 파일에 매핑 -->
+	<resources location="/resources/" mapping="/resources/**"/>
+	
+	<!--============================== viewResolver 설정============================= -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<!-- Controller 빈 자동 스캔 -->
+	<context:component-scan base-package="kr.spring.board.controller"/>
+	
+	<!-- 리소스 번들 지정 -->
+	<beans:bean id="messageSource"
+	  class="org.springframework.context.support.ResourceBundleMessageSource">
+		<beans:property name="basenames">
+			<beans:list>
+				<beans:value>messages.validation</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+</beans:beans>
