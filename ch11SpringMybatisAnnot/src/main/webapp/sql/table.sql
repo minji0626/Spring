@@ -7,3 +7,15 @@ create table aboard(
  reg_date date not null
 );
 create sequence aboard_seq;
+
+create table amember(
+num number primary key,
+name varchar2(30) not null,
+id varchar2(30) not null,
+passwd varchar2(12) not null,
+phone varchar2(15) not null,
+email varchar2(50) not null,
+reg_date date not null
+);
+
+create sequence amember_seq;

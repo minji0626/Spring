@@ -14,6 +14,8 @@
 	<div class="align-right">
 		<input type="button" value="글쓰기"
 		    onclick="location.href='insert.do'">
+		<input type="button" value="회원 목록"
+		    onclick="location.href='memberList.do'">
 	</div>
 	<c:if test="${count == 0 }">
 	<div class="result-display">표시할 내용이 없습니다.</div>

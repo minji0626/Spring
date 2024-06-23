@@ -16,7 +16,7 @@
 	
 	<!-- 빈 자동 스캔 - servlet-context.xml에서 Controller를
 	     자동 스캔 설정해서 아래 설정에서는 Controller 자동 스캔 제외 -->
-	<context:component-scan base-package="kr.spring.board">
+	<context:component-scan base-package="kr.spring.board, kr.spring.member">
 		<context:exclude-filter type="annotation" 
 		      expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>  
@@ -57,12 +57,12 @@
 		<property name="dataSource" ref="dataSource"/>
 		<!-- 더 있는 경우에는 쉼표 하고 추가 명시하면 된다 -->
 		<!-- *을 써서 명시도 가능함 -->
-		<property name="typeAliasesPackage" value="kr.spring.board.vo"/>
+		<property name="typeAliasesPackage" value="kr.spring.board.vo, kr.spring.member.vo"/>
 	</bean>
 	
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<!-- xml 파일 등록 -->
-		<property name="basePackage" value="kr.spring.board.dao"/>
+		<property name="basePackage" value="kr.spring.board.dao, kr.spring.member.dao"/>
 	</bean>
 			
 </beans>

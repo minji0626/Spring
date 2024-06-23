@@ -12,6 +12,7 @@ import kr.spring.board.vo.BoardVO;
 
 // mybatis가 자동으로 implement 해서 생성시켜준다
 public interface BoardMapper {
+	
 		@Insert("INSERT INTO aboard VALUES(aboard_seq.nextval,#{writer},#{title},#{passwd},#{content},SYSDATE)")
 		public void insertBoard(BoardVO board);
 		

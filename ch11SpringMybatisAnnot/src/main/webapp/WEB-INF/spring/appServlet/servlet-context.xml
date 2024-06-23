@@ -22,7 +22,7 @@
 	</beans:bean>
 	
 	<!-- Controller 빈 자동 스캔 -->
-	<context:component-scan base-package="kr.spring.board.controller"/>
+	<context:component-scan base-package="kr.spring.board.controller,kr.spring.member.controller"/>
 	
 	<!-- 리소스 번들 지정 -->
 	<beans:bean id="messageSource"
