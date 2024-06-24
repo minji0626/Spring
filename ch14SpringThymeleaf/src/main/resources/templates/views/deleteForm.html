@@ -14,7 +14,7 @@
 			 <li>
                 <label th:for="*{passwd}">비밀번호</label>
                 <input type="password" th:field="*{passwd}" th:errorclass="field-error">
-                <span th:errors="*{passwd}" class="error-color"></span>
+                <div th:errors="*{passwd}" class="error-color"></div>
             </li>
 		</ul>
 		<div class="align-center">

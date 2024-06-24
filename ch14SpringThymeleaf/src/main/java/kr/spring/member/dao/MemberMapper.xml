@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<!-- interface명칭과 xml의 명칭이 동일해야 한다 -->
+<mapper namespace="kr.spring.member.dao.MemberMapper">
+	<select id="selectMemberList" parameterType="map" resultType="memberVO">
+		SELECT * FROM(SELECT a.*,rownum rnum FROM (SELECT * FROM amember ORDER BY num DESC)a) 
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+	</select>
+ </mapper>

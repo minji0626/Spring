@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원 정보 삭제</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+</head>
+<body>
+<div class="page-main">
+    <h2>회원 정보 삭제</h2>
+    <form action="memberDelete.do" method="post" th:object="${member}">
+    	<input type="hidden" th:field="*{num}">
+        <ul>
+            <li>
+                <label th:for="*{passwd}">비밀번호</label>
+                <input type="password" th:field="*{passwd}" th:errorclass="field-error">
+                <div th:errors="*{passwd}" class="error-color"></div>
+            </li>
+        </ul>
+        <div class="align-center">
+            <input type="submit" value="삭제">
+            <input type="button" value="목록" onclick="location.href='memberList.do'">
+        </div>
+    </form>
+</div>
+</body>
+</html>

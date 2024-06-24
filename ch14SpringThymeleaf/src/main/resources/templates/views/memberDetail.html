@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원 정보</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+</head>
+<body>
+<div class="page-main">
+    <h2 th:text="${membervo.name}"></h2>
+    <p>
+    	회원 번호 : [[${membervo.num}]]<br>
+    	아이디 : [[${membervo.id}]]<br>
+    	전화 번호 : [[${membervo.phone}]]<br>
+    	이메일 : [[${membervo.email}]]<br>
+    	가입일 : [[${membervo.reg_date}]]<br>
+    </p>
+    <hr width="100%" size="1" noshade="noshade">
+	<div class="align-center">
+		<input type="button" value="수정" 
+		  th:onclick="|location.href='@{memberUpdate.do(num=${membervo.num})}'|">
+		<input type="button" value="삭제" 
+		  th:onclick="|location.href='@{memberDelete.do(num=${membervo.num})}'|">
+		<input type="button" value="목록"
+		  onclick="location.href='memberList.do'">    
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 목록</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+</head>
+<body>
+<div class="page-main">
+    <h2>회원 목록</h2>
+    <div class="align-right">
+        <input type="button" value="회원 가입" onclick="location.href='newAccount.do'">
+        <input type="button" value="글 목록" onclick="location.href='list.do'">
+    </div>
+    <div class="result-display" th:if="${count == 0}">표시할 내용이 없습니다.</div>
+    <div th:if="${count > 0}">
+    <table>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+        <!-- JSTL c:forEach 대신 타임리프 th:each 사용 -->
+        <!-- board 변수를 할당하고 list를 가져오는 것임 -->
+        <tr th:each="member : ${list}">
+            <td th:text="${member.num}"></td>
+            <td><a th:href="@{memberDetail.do(num=${member.num})}" th:text="${member.id}"></a></td>
+            <td th:text="${member.name}"></td>
+            <td th:text="${member.reg_date}"></td>
+        </tr>
+    </table>
+    </div>
+    <!-- th:utext는 타임리프에서 HTML 콘텐츠를 렌더링할 때 사용 -->
+    <div class="align-center" th:utext="${page}"></div>
+</div>
+</body>
+</html>
