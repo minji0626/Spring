@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<!-- interface명칭과 xml의 명칭이 동일해야 한다 -->
+<mapper namespace="kr.spring.board.dao.BoardMapper">
+	<!-- 목록 가져오기 , 아이디는 따로 명시하지 않았음 그러나 메소드 명을 아이디로 사용 가능함-->
+ 	<select id="getBoardList" parameterType="map" resultType="boardVO">
+		SELECT * FROM(SELECT a.*,rownum rnum FROM (SELECT * FROM aboard ORDER BY num DESC)a) 
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+	</select>
+	
+ </mapper>
