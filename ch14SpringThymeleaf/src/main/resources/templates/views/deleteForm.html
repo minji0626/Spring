@@ -11,10 +11,10 @@
 	<form action="delete.do" method="post" th:object="${boardVO}">
 		<input type="hidden" th:field="*{num}">
 		<ul>
-			<li>
+			 <li>
                 <label th:for="*{passwd}">비밀번호</label>
                 <input type="password" th:field="*{passwd}" th:errorclass="field-error">
-                <span th:if="${#fields.hasErrors('passwd')}" th:errors="*{passwd}" class="error-color"></span>
+                <span th:errors="*{passwd}" class="error-color"></span>
             </li>
 		</ul>
 		<div class="align-center">

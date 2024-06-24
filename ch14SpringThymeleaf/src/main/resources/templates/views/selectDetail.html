@@ -13,14 +13,17 @@
 			작성자 : [[${board.writer}]] <br>
 			작성일 : [[${board.reg_date}]] <br>
 		</p>
+		<p>
+			<span th:text="'글번호 : ' + ${board.num}"></span>
+		</p>	
+		
 		<hr width="100%" size="1" noshade="noshade">
 		<p th:text="${board.content}"></p>
 		<div class="align-center">
-			<input type="button" value="수정"
-				th:onclick="'location.href=\'update.do?num=' + ${board.num} + '\''" />
-			<input type="button" value="삭제"
-				th:onclick="'location.href=\'delete.do?num=' + ${board.num} + '\''" />
-			<input type="button" value="목록" th:onclick="location.href='list.do'">
+			<input type="button" value="수정" th:onclick="|location.href='@{update.do(num=${board.num})}'|" />
+			<input type="button" value="삭제" th:onclick="|location.href='@{delete.do(num=${board.num})}'|" />
+			<input type="button" value="목록" onclick="location.href='/list.do'">
+
 		</div>
 	</div>
 </body>
