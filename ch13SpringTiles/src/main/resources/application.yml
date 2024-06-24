@@ -1,0 +1,48 @@
+spring: 
+  profiles: #실행환경(local(로컬),dev(개발),real(운영))
+    active: local
+  
+  mvc:
+    view: #view 경로 및 확장자 지정 (우리의 view 코드는 views 폴더에 포함이 되어있고, 뷰는 jsp로 항상 입력)
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+
+  datasource: #DB 접속
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: user01
+    password: 1234
+    hikari: #기본 커넥션풀 
+      connection-timeout : 30000 #클라이언트가 pool에 connection을 요청하는데 기다리는 최대시간을 설정 30초
+      maximum-pool-size : 10 #최대 커넥션 개수 설정
+      max-lifetime: 1800000  #커넥션 풀에서 살아있을 수 있는 커넥션의 최대 수명시간 1,800초(30분)
+      
+  messages: #메시지(파일이 여러개일 경우 ,로 구분) (에러 메세지 처리하는 곳)
+    basename: messages.validation
+    encoding: UTF-8
+    
+  devtools: #View reload (클래스, jsp 자동으로 reload 되도록 설정 바로 바로 적용이 되도록)
+    livereload:
+      enabled: true
+    
+    restart: #컨트롤러, 모델단이 바뀌었을 때 프로젝트 재시작 설정 (정확히는 classpath(src)에 있는 모든 파일)
+      enabled: true
+
+mybatis: #mybatis 설정
+  type-aliases-package: kr.spring.**.vo # 폴더가 변경이 가능하다는 의미
+  mapper-locations: kr/spring/**/dao/*.xml # dao에 mapper를 위치하겠다
+  #mapper-locations: mybatis/mapper/**/*.xml 
+  
+logging: #로그 지정
+  level:
+    #root: error
+    '[kr.spring]': debug 
+    
+server:
+  port: 8000
+  servlet:
+    #context-path: /mybatis
+    encoding:
+      charset: UTF-8
+      enabled: true #http 인코딩 지원을 활성화할지 여부
+      force: true
