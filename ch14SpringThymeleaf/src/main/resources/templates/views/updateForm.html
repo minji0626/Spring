@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>게시글 수정하기</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+</head>
+<body>
+<div class="page-main">
+	<h2>글쓰기</h2>
+	<form action="update.do" method="post" th:object="${boardVO}">
+		<input type="hidden" th:field="*{num}">
+<!-- th:object 는 request에 저장되어 있는 자바빈을 호출한다 -->
+		<ul>
+			 <li>
+                <label th:for="*{writer}">작성자</label>
+                <input type="text" th:field="*{writer}" th:errorclass="field-error">
+                <span th:if="${#fields.hasErrors('writer')}" th:errors="*{writer}" class="error-color"></span>
+            </li>
+            <li>
+                <label th:for="*{title}">제목</label>
+                <input type="text" th:field="*{title}" th:errorclass="field-error">
+                <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-color"></span>
+            </li>
+            <li>
+                <label th:for="*{passwd}">비밀번호</label>
+                <input type="password" th:field="*{passwd}" th:errorclass="field-error">
+                <span th:if="${#fields.hasErrors('passwd')}" th:errors="*{passwd}" class="error-color"></span>
+            </li>
+            <li>
+                <label th:for="*{content}">내용</label>
+                <textarea th:field="*{content}" th:errorclass="field-error"></textarea>
+                <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error-color"></span>
+            </li>
+		</ul>
+		<div class="align-center">
+			<input type="submit" value="수정">
+			<input type="button" value="목록" onclick="location.href='list.do'">
+		</div>
+	</form>
+</div>
+</body>
+</html>

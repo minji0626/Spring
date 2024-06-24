@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>글 세부 정보</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+</head>
+<body>
+	<div class="page-main">
+		<h2 th:text="${board.title}"></h2>
+		<p>
+			글 번호 : [[${board.num}]] <br> 
+			작성자 : [[${board.writer}]] <br>
+			작성일 : [[${board.reg_date}]] <br>
+		</p>
+		<hr width="100%" size="1" noshade="noshade">
+		<p th:text="${board.content}"></p>
+		<div class="align-center">
+			<input type="button" value="수정"
+				th:onclick="'location.href=\'update.do?num=' + ${board.num} + '\''" />
+			<input type="button" value="삭제"
+				th:onclick="'location.href=\'delete.do?num=' + ${board.num} + '\''" />
+			<input type="button" value="목록" th:onclick="location.href='list.do'">
+		</div>
+	</div>
+</body>
+</html>
