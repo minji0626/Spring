@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/basicLayout}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+<meta charset="UTF-8">
 <title>회원 정보</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
 </head>
 <body>
-<div layout:fragment="content" class="page-main">
+<div class="page-main">
     <h2 th:text="${membervo.name}"></h2>
     <p>
     	회원 번호 : [[${membervo.num}]]<br>

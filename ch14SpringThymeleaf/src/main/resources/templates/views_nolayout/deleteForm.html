@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/basicLayout}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>삭제하기</title>
+<meta charset="UTF-8">
+<title>게시글 삭제하기</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-<div layout:fragment="content" class="page-main">
+<div class="page-main">
 	<h2>글 삭제</h2>
 	<form action="delete.do" method="post" th:object="${boardVO}">
 		<input type="hidden" th:field="*{num}">

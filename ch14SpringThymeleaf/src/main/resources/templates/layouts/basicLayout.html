@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<!-- layout의 title 우선, content의 title 다음 -->
+<!-- /*레이아웃의 타이틀 > 내용의 타이틀 (변환될 때 제거가 되는 주석)*/ -->
+<title layout:title-pattern="$LAYOUT_TITLE > $CONTENT_TITLE">게시판</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+</head>
+<body>
+	<!-- div태그를 replace(대체) 경로 :: 파일 명 (대체가 되는 형식)-->
+	<div th:replace="fragments/header :: header"></div>
+	<!-- div 내부에 내용을 표시(내용이 하위로 들어가는 방식) -->
+	<div layout:fragment="content"></div>
+	<!-- div태그를 replace(대체) 경로 :: 파일 명 (대체가 되는 형식)-->
+	<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

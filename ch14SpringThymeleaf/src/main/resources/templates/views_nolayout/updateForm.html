@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/basicLayout}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>작성하기</title>
+<meta charset="UTF-8">
+<title>게시글 수정하기</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
 </head>
 <body>
-<div layout:fragment="content" class="page-main">
-    <h2>글쓰기</h2>
-    <form action="insert.do" method="post" th:object="${boardVO}">
-        <ul>
-            <li>
+<div class="page-main">
+	<h2>글쓰기</h2>
+	<form action="update.do" method="post" th:object="${boardVO}">
+		<input type="hidden" th:field="*{num}">
+<!-- th:object 는 request에 저장되어 있는 자바빈을 호출한다 -->
+		<ul>
+			 <li>
                 <label th:for="*{writer}">작성자</label>
                 <input type="text" th:field="*{writer}" th:errorclass="field-error">
                 <span th:errors="*{writer}" class="error-color"></span>
@@ -30,12 +33,12 @@
                 <textarea th:field="*{content}" th:errorclass="field-error"></textarea>
                 <span th:errors="*{content}" class="error-color"></span>
             </li>
-        </ul>
-        <div class="align-center">
-            <input type="submit" value="등록">
-            <input type="button" value="목록" onclick="location.href='list.do'">
-        </div>
-    </form>
+		</ul>
+		<div class="align-center">
+			<input type="submit" value="수정">
+			<input type="button" value="목록" onclick="location.href='list.do'">
+		</div>
+	</form>
 </div>
 </body>
 </html>

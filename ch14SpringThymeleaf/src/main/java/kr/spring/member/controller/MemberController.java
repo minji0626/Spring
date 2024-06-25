@@ -38,7 +38,6 @@ public class MemberController {
 		public MemberVO initCommand() {
 			return new MemberVO();
 		}
-		
 	
 		// 회원가입 폼
 		@GetMapping("/newAccount.do")

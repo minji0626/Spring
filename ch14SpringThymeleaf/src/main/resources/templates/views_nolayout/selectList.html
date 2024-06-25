@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/basicLayout}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>목록</title>
+    <meta charset="UTF-8">
+    <title>게시판 목록</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <!-- 타임리프 속성을 이용해서 css 가져오기 th: 접두사 -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
 </head>
 <body>
-<div layout:fragment="content" class="page-main">
+<div class="page-main">
     <h2>게시판 목록</h2>
     <div class="align-right">
         <input type="button" value="글쓰기" onclick="location.href='insert.do'">
         <input type="button" value="회원 목록" onclick="location.href='memberList.do'">
     </div>
+    <!-- 태그를 보여줄 것인가 안 보여줄 것인가로 나타냄 -->
+    <!-- jstl은 태그를 지원, 타임리프는 속성을 지원한다고 보면 된다 -->
+    <!-- 보여지게 처리 또는 보여지지 않게 처리 -->
     <div class="result-display" th:if="${count == 0}">표시할 내용이 없습니다.</div>
     <div th:if="${count > 0}">
     <table>
@@ -21,6 +26,8 @@
             <th>작성자</th>
             <th>작성일</th>
         </tr>
+        <!-- JSTL c:forEach 대신 타임리프 th:each 사용 -->
+        <!-- board 변수를 할당하고 list를 가져오는 것임 -->
         <tr th:each="board : ${list}">
             <td th:text="${board.num}"></td>
             <td><a th:href="@{detail.do(num=${board.num})}" th:text="${board.title}"></a></td>
@@ -29,6 +36,7 @@
         </tr>
     </table>
     </div>
+    <!-- th:utext는 타임리프에서 HTML 콘텐츠를 렌더링할 때 사용 -->
     <div class="align-center" th:utext="${page}"></div>
 </div>
 </body>

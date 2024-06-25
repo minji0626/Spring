@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/basicLayout}">
 <head>
-<meta charset="UTF-8">
-<title>게시글 수정하기</title>
-<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+<title>수정하기</title>
 </head>
 <body>
-<div class="page-main">
+<div layout:fragment="content" class="page-main">
 	<h2>글쓰기</h2>
 	<form action="update.do" method="post" th:object="${boardVO}">
 		<input type="hidden" th:field="*{num}">

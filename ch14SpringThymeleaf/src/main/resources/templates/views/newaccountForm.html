@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/basicLayout}">
 <head>
-<meta charset="UTF-8">
 <title>회원 가입</title>
-<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
 </head>
 <body>
-<div class="page-main">
+<div layout:fragment="content" class="page-main">
     <h2>회원 가입</h2>
     <form action="newAccount.do" method="post" th:object="${member}">
         <ul>
