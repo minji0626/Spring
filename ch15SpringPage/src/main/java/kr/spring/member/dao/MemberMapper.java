@@ -26,12 +26,9 @@ public interface MemberMapper {
 	
 	@Select("SELECT * FROM spmember JOIN spmember_detail USING(mem_num) WHERE mem_num=#{mem_num}")
 	public MemberVO selectMember(Long mem_num);
-	
+	@Update("UPDATE spmember SET nick_name=#{nick_name} WHERE mem_num=#{mem_num}")
 	public void updateMember(MemberVO member);
-	
-	@Update("UPDATE spmember_detail set name=#{name}, phone=#{phone}, email=#{email}, zipcode=#{zipcode}, address1=#{address1}, address2=#{address2} modify_date=SYSDATE WHERE mem_num=#{mem_num}")
 	public void updateMember_detail(MemberVO member);
-	
 	@Update("UPDATE spmember_detail set passwd=#{passwd} WHERER mem_num=#{mem_num}")
 	public void updatePassword(MemberVO member);
 	
