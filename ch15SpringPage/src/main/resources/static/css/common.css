@@ -1,12 +1,14 @@
 @charset "UTF-8";
-
+*{
+	font-family: "Noto Sans KR", sans-serif;
+}
 /* 전체 레이아웃
 ---------------------*/
 #main{
 	width:1024px;
 	margin:0 auto;
 	font-size:10pt;
-	font-family:"맑은 고딕";
+	font-family: "Noto Sans KR", sans-serif;
 }
 #main_header{
 	margin-bottom:10px;
@@ -108,7 +110,10 @@ input,select{
 }
 input[type="text"],input[type="password"],
                                      input[type="email"]{
-	width:350px;	
+	border : 1px solid #c9c9c9;
+	width:350px;
+	padding:0.55rem 0.55rem;
+	border-radius: 8px;
 }
 /* 공통 목록
 ---------------------*/
@@ -164,7 +169,6 @@ table td, table th{
 	border-radius:2px;
 	color:#fff;
 	background-color:#09aa5c;
-	font-weight:bold;
 	cursor:pointer;
 }
 .default-btn:hover{
@@ -294,7 +298,6 @@ label[for="order_quatity"]{
 }
 #item_total_txt{
 	color:#000;
-	font-weight:bold;
 }
 input[type="number"].quantity-width{
 	width:40px;
@@ -321,7 +324,16 @@ ul#delivery_info li span{
 	display: inline-block;
 }
 
+.error-color-reg {
+	color:red;
+	font-size : 8pt;
+	margin-left: 17%;
+}
 
+.error-color{
+	color:red;
+	font-size : 9pt;
+}
 
 
 

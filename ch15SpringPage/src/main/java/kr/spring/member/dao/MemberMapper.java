@@ -17,8 +17,11 @@ public interface MemberMapper {
 	
 	@Insert("INSERT INTO spmember (mem_num, id, nick_name, auth) VALUES (#{mem_num}, #{id}, #{nick_name}, 2)")
 	public void insertMember(MemberVO member);
+	
+	// xml
 	public void insertMember_detail(MemberVO member);
 	
+	// xml
 	public MemberVO selectCheckMember(String id);
 	
 	@Select("SELECT * FROM spmember JOIN spmember_detail USING(mem_num) WHERE mem_num=#{mem_num}")

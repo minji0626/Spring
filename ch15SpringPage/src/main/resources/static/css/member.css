@@ -10,37 +10,47 @@
 }
 #member_register input[id="id"]{
 	width:236px;
+	border : 1px solid #c9c9c9;
+	border-radius: 8px;
 }
 #member_register input[id="zipcode"],
                          #member_modify input[id="zipcode"]{
 	width:220px;
+	border : 1px solid #c9c9c9;
+	border-radius: 8px;
 }
 #member_modify{
 	width:96%;
 }
-#member_delete input[id="id"],
-                         #member_delete input[id="passwd"]{
+#member_delete input[id="id"], #member_delete input[id="passwd"]{
 	width:240px;
+	border : 1px solid #c9c9c9;
+	border-radius: 8px;
+}
+
+#message_id{
+	font-size: 8pt;
 }
 
 /* 로그인
 ---------------------*/
-#login_form{
+#member_login{
 	width:300px;
 	margin:0 auto;
 	padding:0;
 	border:none;
 }
-#login_form ul{
+#member_login ul{
 	padding:0;
 }
 .floating-label{/*floating label 설정*/
 	position:relative;
 }
 .floating-label > .form-input{
-	width:300px;
+	width:320px;
 	height:32px;
 	padding:0.55rem 0.55rem;
+	border-radius: 8px;
 }
 .floating-label > label{
 	position:absolute;
@@ -63,6 +73,25 @@
 	opacity:0.65;
 	transform:scale(0.85) translateY(-0.5rem) translateX(-0.5rem);      
 }
+
+#member_login .login-btn{
+	width:340px;
+	background-color: #5257ff;
+	cursor: pointer;
+	color: white;
+	border : none;
+	height: 34px;
+	padding: 8px;
+}
+
+#member_login label[for="auto"]{
+	width : 200px;
+	padding : 0 0 5px 0;
+}
+.login-btns {
+	margin-left : 3.8%;
+}
+
 /* MY페이지
 ---------------------*/
 .mypage-div{

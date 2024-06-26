@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!-- 회원 가입 시작 -->
 <div class="page-main">
 	<h2>회원 가입</h2>
@@ -10,15 +11,15 @@
 			<li>
 				<form:label path="id">아이디</form:label>
 				<form:input path="id" placeholder="영문, 숫자만 가능 최소 4자~ 최대 12자까지" autocomplete="off"/>
-				<input type="button" id="confirmID" value="ID 중복 확인" class="default-btn">
+				<input type="button" id="confirmId" value="ID 중복 확인" class="default-btn">
 				<span id="message_id"></span>
-				<form:errors element="div" path="id" cssClass="error-color"/>
+				<form:errors element="div" path="id" cssClass="error-color-reg"/>
 			</li>
 			
 			<li>
 				<form:label path="name">이름</form:label>
 				<form:input path="name" />
-				<form:errors element="div" path="name" cssClass="error-color"/>
+				<form:errors element="div" path="name" cssClass="error-color-reg"/>
 			</li>
 			
 			<li>
@@ -29,45 +30,46 @@
 			<li>
 				<form:label path="passwd">비밀번호</form:label>
 				<form:password path="passwd" placeholder="영문, 숫자만 가능 최소 4자~ 최대 12자까지"/>
-				<form:errors element="div" path="passwd" cssClass="error-color"/>
+				<form:errors element="div" path="passwd" cssClass="error-color-reg"/>
 			</li>
 			
 			<li>
 				<form:label path="phone">전화 번호</form:label>
 				<form:input path="phone" placeholder="010********" />
-				<form:errors element="div" path="phone" cssClass="error-color"/>
+				<form:errors element="div" path="phone" cssClass="error-color-reg"/>
 			</li>
 			
 			<li>
 				<form:label path="email">이메일</form:label>
 				<form:input path="email"/>
-				<form:errors element="div" path="email" cssClass="error-color"/>
+				<form:errors element="div" path="email" cssClass="error-color-reg"/>
 			</li>
 			
 			<li>
 				<form:label path="zipcode">우편번호</form:label>
 				<form:input path="zipcode"/>
 				<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기" class="default-btn">
-				<form:errors element="div" path="zipcode" cssClass="error-color"/>
+				<form:errors element="div" path="zipcode" cssClass="error-color-reg"/>
 			</li>
 			
 			<li>
 				<form:label path="address1">주소</form:label>
 				<form:input path="address1"/>
-				<form:errors element="div" path="address1" cssClass="error-color"/>
+				<form:errors element="div" path="address1" cssClass="error-color-reg"/>
 			</li>
 			
 			<li>
 				<form:label path="address2">상세 주소</form:label>
 				<form:input path="address2"/>
-				<form:errors element="div" path="address2" cssClass="error-color"/>
+				<form:errors element="div" path="address2" cssClass="error-color-reg"/>
 			</li>
 		</ul>
 		<div class="align-center">
-			<form:button>등록</form:button>
-			<input type="button" value="목록"
-			   onclick="location.href='memberList.do'">
-		</div>
+			<form:button class="default-btn">전송</form:button>
+			<input type="button" value="홈으로"
+			  class="default-btn"
+			  onclick="location.href='${pageContext.request.contextPath}/main/main'">
+		</div>   
 	</form:form>
 	
 	<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
@@ -76,6 +78,8 @@
 </div>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/member.register.js"></script>
 <script>
     // 우편번호 찾기 화면을 넣을 element
     var element_layer = document.getElementById('layer');

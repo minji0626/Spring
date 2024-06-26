@@ -24,12 +24,12 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public MemberVO selectCheckMember(String id) {
-		return null;
+		return memberMapper.selectCheckMember(id);
 	}
 
 	@Override
 	public MemberVO selectMember(Long mem_num) {
-		return null;
+		return memberMapper.selectMember(mem_num);
 	}
 
 	@Override

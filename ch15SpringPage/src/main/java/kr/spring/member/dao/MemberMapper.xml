@@ -12,6 +12,17 @@
         #{mem_num},
         #{name}, #{passwd}, #{phone}, #{email}, #{zipcode}, #{address1}, #{address2}
     )
-</insert>
+	</insert>
+	
+	<!-- 아이디 중복 체크 -->			
+	<!-- id의 타입이 String 알리아스로 표시 (실제 데이터를 가져오는건 id)-->
+																 <!-- 자바빈 -->
+	<!-- 삭제를 진행할 때 spmember_detail 만 삭제되기 때문에 
+		누락되는 데이터가 발생할 수 있으니 Left Outer Join 사용한다 -->
+	<select id="selectCheckMember" parameterType="string" resultType="memberVO">
+		SELECT mem_num, id, auth, nick_name, au_id, passwd, email 
+		FROM spmember LEFT OUTER JOIN spmember_detail USING(mem_num) 
+		WHERE id = #{id}
+	</select>
 
  </mapper>
