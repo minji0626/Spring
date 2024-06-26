@@ -146,7 +146,9 @@ public class MemberController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
 		MemberVO member = memberService.selectMember(user.getMem_num());
+		log.debug("<< My Page >> : " + member);
 		
+		model.addAttribute("member",member);
 		return "myPage";
 	}
 		
