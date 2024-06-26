@@ -140,5 +140,14 @@ public class MemberController {
 		return "redirect:/main/main";
 	}
 	
+	@GetMapping("/member/myPage")
+	public String process(HttpSession session, Model model) {
+		// 로그인 한 사람의 회원 정보(session)를 가져온다
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		MemberVO member = memberService.selectMember(user.getMem_num());
+		
+		return "myPage";
+	}
 		
 }
