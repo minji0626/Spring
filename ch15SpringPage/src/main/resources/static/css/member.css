@@ -13,8 +13,7 @@
 	border : 1px solid #c9c9c9;
 	border-radius: 8px;
 }
-#member_register input[id="zipcode"],
-                         #member_modify input[id="zipcode"]{
+#member_register input[id="zipcode"], #member_modify input[id="zipcode"]{
 	width:220px;
 	border : 1px solid #c9c9c9;
 	border-radius: 8px;

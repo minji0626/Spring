@@ -48,4 +48,29 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 
+	@Override
+	public void updateAu_id(String au_id, Long mem_num) {
+		
+	}
+
+	@Override
+	public void selectAu_id(String au_id) {
+		
+	}
+
+	@Override
+	public void deleteAu_id(Long mem_num) {
+		
+	}
+
+	@Override
+	public void updateRandomPassword(MemberVO member) {
+		
+	}
+
+	@Override
+	public void updateProfile(MemberVO member) {
+		memberMapper.updateProfile(member);
+	}
+
 }

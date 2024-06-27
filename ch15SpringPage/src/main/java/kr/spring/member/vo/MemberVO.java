@@ -29,7 +29,6 @@ public class MemberVO {
 	
 	@NotBlank
 	private String name;
-	@NotBlank
 	@Pattern(regexp = "^[0-9a-zA-Z]{4,12}$")
 	private String passwd;
 	@NotBlank

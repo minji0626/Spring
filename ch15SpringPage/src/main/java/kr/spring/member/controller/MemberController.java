@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.AuthCheckException;
+import kr.spring.util.FileUtil;
 
 @Controller
 public class MemberController {
@@ -151,5 +153,92 @@ public class MemberController {
 		model.addAttribute("member",member);
 		return "myPage";
 	}
+	
+	// 회원 정보 수정하기
+	// 수정 폼 호출
+	@GetMapping("/member/update")
+	public String formUpdate(HttpSession session, Model model) {
+		// 세션에 저장된 user의 정보를 가져온다
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
+		MemberVO memberVO = memberService.selectMember(user.getMem_num());
+		model.addAttribute("memberVO",memberVO);
+		
+		return "memberModify";
+	}
+	
+	// 회원 정보 수정
+	@PostMapping("/member/update")
+	public String postMethodName(@Valid MemberVO memberVO, BindingResult result,HttpSession session) {
+		
+		log.debug("<< 회원 정보 수정 >> : " + memberVO);
+		
+		if(result.hasErrors()) {
+			return "memberModify";
+		}
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		memberVO.setMem_num(user.getMem_num());
+		
+		memberService.updateMember(memberVO);
+		
+		// 세션에 저장된 정보 변경
+		user.setNick_name(memberVO.getNick_name());
+		user.setEmail(memberVO.getEmail());
+		
+		return "redirect:/member/myPage";
+	}
+	
+	// 프로필 사진 출력하기(로그인 전용)
+	// 이미지 스트림을 처리할 수 있는 클래스 -> imageView
+	// 해당 이름하고 동일한 클래스를 만들어서 스트림 처리를 진행 -> class가 view 역할을 할 수 있게
+	@GetMapping("/member/photoView")
+	public String getProfile(HttpSession session, HttpServletRequest request, Model model) {
+		// session에 저장된 user의 정보를 불러온다
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		log.debug("<< 프로필 사진 출력 >> : " + user);
+		
+		
+		if(user == null) {
+			// 로그인이 되지 않은 경우
+			getBasicProfileImage(request, model);
+		} else {
+			// 로그인이 된 경우
+			// user를 통해서 mem_num을 받아와서 데이터를 읽어와서 처리한다
+			MemberVO memberVO = memberService.selectMember(user.getMem_num());
+			viewProfile(memberVO, request, model);
+		}
+		
+		return "imageView";
+	}
+	
+	// 회원 프로필 사진 처리를 위한 공통 코드
+	// 이미지가 없는 경우 -> basicprofileimage 메서드를 호출한다
+	// 이미지가 있는 경우 -> imagefile과 filename을 읽어온다
+	public void viewProfile(MemberVO memberVO, HttpServletRequest request, Model model) {
+		if (memberVO == null || memberVO.getPhoto_name() ==  null) {
+			// DB에 저장된 프로필 사진이 없기 때문에 기본 이미지를 띄운다.
+			getBasicProfileImage(request, model);
+		} else {
+			// 업로드된 프로필 이미지 읽어오기
+			model.addAttribute("imageFile", memberVO.getPhoto());
+			model.addAttribute("filename", memberVO.getPhoto_name());
+		}
+	}
+	
+	// 기본 이미지 읽어오기
+	// DB에 저장되어있는 프로필 이미지가 없고, 오류가 있어서 보여지는 상황의 경우에는 기본 이미지를 보여준다
+	// 기본이미지는 image_bundle 폴더의 face.png이다.
+	// 로그인이 갑자기 풀린 경우 정보가 빠져나가지 않게 해주기도 한다.
+	public void getBasicProfileImage(HttpServletRequest request, Model model) {
+																		// 실제 경로를 지정
+		byte[] readbyte = FileUtil.getBytes(request.getServletContext().getRealPath("/image_bundle/face.png"));
+		model.addAttribute("imageFile", readbyte);
+		model.addAttribute("filename", "face.png");
+	}
+	
+	
+	
+	
+	
 }

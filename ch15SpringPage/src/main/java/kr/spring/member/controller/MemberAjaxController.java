@@ -4,11 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
@@ -41,6 +45,29 @@ public class MemberAjaxController {
 //				패턴이 일치하면서 아이디 미중복
 				mapAjax.put("result", "idNotFound");
 			}
+		}
+		
+		return mapAjax;
+	}
+	
+	// 프로필 사진 업로드 작업
+	@PostMapping("/member/updateMyPhoto")
+	@ResponseBody
+	public Map<String, String> processProfile(MemberVO memberVO, HttpSession session){
+		log.debug("<<프로필 사진 변경>> : " + memberVO);
+		
+		Map<String, String> mapAjax = new HashMap<String, String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user == null) {
+			mapAjax.put("result", "logout");
+		}
+		else {
+			memberVO.setMem_num(user.getMem_num());
+			memberService.updateProfile(memberVO);
+			
+			mapAjax.put("result", "success");
 		}
 		
 		return mapAjax;
