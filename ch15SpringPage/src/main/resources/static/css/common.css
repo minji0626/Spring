@@ -69,7 +69,10 @@ a:hover {
 }
 
 .align-right {
-	text-align: right;
+	display: flex;
+    text-align: right;
+    justify-content: flex-end;
+    align-items: center;
 }
 /* 상단 메뉴
 ---------------------*/

@@ -40,7 +40,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void updatePassword(MemberVO member) {
-		
+		memberMapper.updatePassword(member);
 	}
 
 	@Override

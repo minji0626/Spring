@@ -31,7 +31,7 @@ public interface MemberMapper {
 	public void updateMember(MemberVO member);
 	public void updateMember_detail(MemberVO member);
 	
-	@Update("UPDATE spmember_detail set passwd=#{passwd} WHERER mem_num=#{mem_num}")
+	@Update("UPDATE spmember_detail SET passwd=#{passwd} WHERER mem_num=#{mem_num}")
 	public void updatePassword(MemberVO member);
 	
 	@Delete("DELETE FROM spmember WHERE mem_num = #{mem_num}")
