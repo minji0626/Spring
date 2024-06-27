@@ -155,7 +155,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 	margin-left: 3px;
 }
 
-#side-height {
+.side-height {
 	/* 사이드 바의 높이가 컨텐트의 높이가 동일하게 자동 조절 하기 위해 흘러넘친 배경색은 숨긴다 */
 	overflow: hidden;
 	margin-bottom: 10px;

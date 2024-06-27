@@ -16,7 +16,7 @@
 			<!-- header의 내용이 들어옴 -->
 			<tiles:insertAttribute name="header"/>
 		</div>
-		 <div id="side-height">
+		 <div class="side-height">
 		 	<!-- nav의 내용이 들어옴 -->
 		 	<div id="page_nav">
 		 		<tiles:insertAttribute name="nav"/> 
