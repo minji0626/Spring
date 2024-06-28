@@ -30,7 +30,7 @@ create sequence spmember_seq;
 -- 게시판
 create table spboard(
 board_num number not null,
-category number(1) not null,
+category char(1) not null,
 title varchar2(90) not null,
 content clob not null,
 hit number(8) default 0 not null,

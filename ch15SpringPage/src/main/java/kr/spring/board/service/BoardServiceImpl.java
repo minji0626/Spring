@@ -29,7 +29,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void insertBoard(BoardVO board) {
-		
+		boardMapper.insertBoard(board);
 	}
 
 	@Override

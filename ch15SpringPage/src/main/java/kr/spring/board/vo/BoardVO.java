@@ -2,6 +2,11 @@ package kr.spring.board.vo;
 
 import java.sql.Date;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
@@ -12,10 +17,19 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BoardVO {
+	
 	private Long board_num;
-	private int category;
+	
+	// 문자열 길이 측정
+	@NotBlank
+	private String category;
+	
+	@NotBlank
 	private String title;
+	
+	@NotEmpty
 	private String content;
+	
 	private int hit;
 	private Date reg_date;
 	private Date modify_date;

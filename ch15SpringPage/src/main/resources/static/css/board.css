@@ -120,6 +120,17 @@ form#mre_form {
 	margin: 5px;
 }
 
+/* 나중에 지워질 애들임 */
+input[type="text"],input[type="password"],textarea {
+    width: 60%;
+    padding: 8px 10px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    resize: none;
+    margin-bottom: 10px;
+}
+
 /* 게시판 글 수정
 ---------------------*/
 #file_detail {

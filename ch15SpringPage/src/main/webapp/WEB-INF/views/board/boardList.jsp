@@ -6,9 +6,8 @@
 <div class="page-main">
  	<h2>게시판 목록</h2>
  	<div class="align-right">
- 	<c:if test="${!empty user}">
- 		<input type="button" value="게시글 등록" onclick="location.href='write'">
-     </c:if>
+ 		<input type="button" value="게시글 등록" onclick="location.href='write'" 
+ 		<c:if test="${empty user}"> disabled="disabled" </c:if>>
  	</div>
  	
 </div>
