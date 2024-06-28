@@ -27,6 +27,13 @@ spring:
     
     restart: #컨트롤러, 모델단이 바뀌었을 때 프로젝트 재시작 설정 (정확히는 classpath(src)에 있는 모든 파일)
       enabled: true
+      
+  servlet:
+    multipart:
+      max-file-size: 50MB #파일 한 개당 최대 사이즈
+      max-request-size: 200MB #요청당 최대 파일 크기
+        
+        
 
 mybatis: #mybatis 설정
   type-aliases-package: kr.spring.**.vo # 폴더가 변경이 가능하다는 의미
@@ -46,3 +53,6 @@ server:
       charset: UTF-8
       enabled: true #http 인코딩 지원을 활성화할지 여부
       force: true
+  tomcat:
+    max-http-form-post-size: 200MB #톰캣에서 허용하는 파일 업로드 사이즈
+      

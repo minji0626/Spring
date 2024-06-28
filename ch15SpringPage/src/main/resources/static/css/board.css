@@ -1,0 +1,138 @@
+@charset "UTF-8";
+
+/* 게시판 목록
+---------------------*/
+form#search_form #order {
+	height: 32px;
+}
+
+/* 게시판 폼
+---------------------*/
+/* CK 에디터 사용시 등록& 수정 폼 */
+form#register_form, form#update_form {
+	padding: 0 0 10px 0;
+	width: 800px;
+}
+form#register_form ul, form#update_form ul{
+	padding: 20px;
+}
+form#register_form input[type="text"], form#update_form input[type="text"]{
+	width: 759px;
+	margin-bottom: 10px;
+}
+
+/* CK 에디터에서만 사용되는 css */
+.ck-editor__editable_inline{
+	min-height: 250px;	
+}
+
+
+/* 게시판 글상세
+---------------------*/
+ul.detail-info li {
+	display: inline-block;
+}
+
+.detail-img {
+	max-width: 500px;
+}
+
+ul.detail-sub {
+	margin: 0;
+	padding: 0;
+}
+
+ul.detail-sub li {
+	display: inline-block;
+	width: 49%;
+	height: 50px;
+	vertical-align: middle;
+}
+
+ul.detail-sub li:first-child img {
+	vertical-align: middle;
+}
+
+ul.detail-sub li:last-child {
+	text-align: right;
+	line-height: 250%;
+}
+
+#output_fav {
+	cursor: pointer;
+}
+
+div#reply_div {
+	padding: 5px 10px 40px 10px;
+	margin-top: 10px;
+	background-color: #EEEEEE;
+}
+
+form#re_form {
+	width: 650px;
+	border: none;
+}
+
+span.re-title {
+	color: #000;
+	font-size: 12pt;
+	line-height: 200%;
+}
+
+span.letter-count {
+	font-size: 10pt;
+	color: #999;
+}
+
+textarea.rep-content {
+	width: 90%;
+	height: 50px;
+	margin: 10px;
+}
+
+div#re_first, div#mre_first {
+	float: left;
+	width: 70%;
+	padding-left: 15px;
+	margin-bottom: 10px;
+}
+
+div#re_second, div#mre_second {
+	float: left;
+	width: 19%;
+	margin-bottom: 10px;
+}
+
+div#loading {
+	text-align: center;
+}
+
+div.paging-button {
+	text-align: right;
+}
+
+div#output {
+	clear: both;
+}
+
+form#mre_form {
+	border: none;
+	margin: 5px;
+}
+
+/* 나중에 지워질 애들임 */
+input[type="text"],input[type="password"],textarea {
+    width: 60%;
+    padding: 8px 10px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    resize: none;
+    margin-bottom: 10px;
+}
+
+/* 게시판 글 수정
+---------------------*/
+#file_detail {
+	margin: 5px 0 0 130px;
+}

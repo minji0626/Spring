@@ -28,4 +28,16 @@
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
 	</definition>
 	
+	<!-- 회원 정보 수정하기 -->
+	<definition name="memberModify" extends="myPage">
+		<put-attribute name="title" value="Member Update Page"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberModify.jsp" />
+	</definition>
+	
+	<definition name="memberChangePassword" extends="myPage">
+		<put-attribute name="title" value="Member Change Password Page"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberChangePassword.jsp" />
+	</definition>
+	
+	
 </tiles-definitions>

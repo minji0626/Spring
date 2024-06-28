@@ -29,9 +29,13 @@ public class MemberVO {
 	
 	@NotBlank
 	private String name;
-	@NotBlank
 	@Pattern(regexp = "^[0-9a-zA-Z]{4,12}$")
 	private String passwd;
+	
+	// 비밀번호 변경에만 조건 체크
+	@Pattern(regexp = "^[0-9a-zA-Z]+$")
+	private String captcha_chars;
+	
 	@NotBlank
 	private String phone;
 	@NotBlank

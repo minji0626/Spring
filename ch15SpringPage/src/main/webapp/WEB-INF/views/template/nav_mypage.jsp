@@ -20,14 +20,14 @@
 	
 	<ul>
 		<li>
-		<input type="button" class="menu-btn" value="비밀번호 변경" onclick="changePassword">
+		<input type="button" class="menu-btn" value="비밀번호 변경" onclick="location.href='changePassword'">
 		</li>
 		<li>
-		<input type="button" class="menu-btn" value="회원 탈퇴" onclick="delete">
+		<input type="button" class="menu-btn" value="회원 탈퇴" onclick="location.href='delete'">
 		</li>
 	</ul>
-	
-	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/member.profile.js"></script>
 	
 </div>
 <!-- My page 메뉴 끝 -->

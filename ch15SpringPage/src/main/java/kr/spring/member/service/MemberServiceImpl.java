@@ -12,7 +12,7 @@ import kr.spring.member.vo.MemberVO;
 public class MemberServiceImpl implements MemberService{
 	
 	@Autowired
-	private MemberMapper memberMapper;
+	MemberMapper memberMapper;
 	
 	@Override
 	public void insertMember(MemberVO member) {
@@ -40,12 +40,37 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void updatePassword(MemberVO member) {
-		
+		memberMapper.updatePassword(member);
 	}
 
 	@Override
 	public void deleteMember(Long mem_num) {
 		
+	}
+
+	@Override
+	public void updateAu_id(String au_id, Long mem_num) {
+		
+	}
+
+	@Override
+	public void selectAu_id(String au_id) {
+		
+	}
+
+	@Override
+	public void deleteAu_id(Long mem_num) {
+		
+	}
+
+	@Override
+	public void updateRandomPassword(MemberVO member) {
+		
+	}
+
+	@Override
+	public void updateProfile(MemberVO member) {
+		memberMapper.updateProfile(member);
 	}
 
 }

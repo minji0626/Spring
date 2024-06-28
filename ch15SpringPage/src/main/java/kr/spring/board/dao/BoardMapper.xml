@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<!-- interface명칭과 xml의 명칭이 동일해야 한다 -->
+<mapper namespace="kr.spring.board.dao.BoardMapper">
+	<!-- 글 작성하기 -->
+	<insert id="insertBoard" parameterType="boardVO">
+	INSERT INTO 
+	spboard(
+	board_num, 
+	category,
+	title,
+	content,
+	reg_date, 
+	filename,
+	ip,
+	mem_num) 
+	VALUES(spboard_seq.nextval,
+	#{category},
+	#{title},
+	#{content},
+	SYSDATE,
+	#{filename, jdbcType=VARCHAR},
+	#{ip},
+	#{mem_num})
+	</insert>
+ </mapper>
