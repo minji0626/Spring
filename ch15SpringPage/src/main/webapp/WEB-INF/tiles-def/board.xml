@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<!-- Board List -->
+	<definition name="boardList" extends="main">
+		<put-attribute name="title" value="Board List"/>
+		<put-attribute name="css" value="/WEB-INF/views/board/boardCSS.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/board/boardList.jsp" />
+	</definition>
+	
+	<!-- Board Write -->
+	<definition name="boardWrite" extends="main">
+		<put-attribute name="title" value="Board Write"/>
+		<put-attribute name="css" value="/WEB-INF/views/board/boardCSS.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/board/boardWrite.jsp" />
+	</definition>
+	
+</tiles-definitions>

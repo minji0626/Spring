@@ -26,3 +26,21 @@ constraint spmember_detail_fk foreign key (mem_num) references spmember (mem_num
 );
 
 create sequence spmember_seq;
+
+-- 게시판
+create table spboard(
+board_num number not null,
+category number(1) not null,
+title varchar2(90) not null,
+content clob not null,
+hit number(8) default 0 not null,
+reg_date date default sysdate not null,
+modify_date date,
+filename varchar2(400),
+ip varchar2(40) not null,
+mem_num number not null,
+constraint spboard_pk primary key (board_num),
+constraint spboard_fk foreign key (mem_num) references spmember(mem_num)
+);
+
+create sequence spboard_seq;

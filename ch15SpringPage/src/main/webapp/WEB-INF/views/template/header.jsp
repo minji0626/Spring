@@ -17,7 +17,9 @@
 		<a href="${pageContext.request.contextPath}/member/registerUser" style="margin-right: 2%;">회원가입</a>
 		<a href="${pageContext.request.contextPath}/member/login" style="margin-right: 2%;">로그인</a>
 	</c:if>
+		<a href="${pageContext.request.contextPath}/board/list" style="margin-right: 2%;">게시판 목록</a>
 		<a href="${pageContext.request.contextPath}/main/main" style="margin-right: 2%;">홈</a>
+		
 
 </div>
 <!--  상단 끝 -->

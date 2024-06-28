@@ -1,6 +1,5 @@
 package kr.spring.member.controller;
 
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,8 +9,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,14 +22,14 @@ import kr.spring.member.vo.MemberVO;
 import kr.spring.util.AuthCheckException;
 import kr.spring.util.CaptchaUtil;
 import kr.spring.util.FileUtil;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class MemberController {
 	
 	@Autowired
 	public MemberService memberService;
-	
-	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
 	
 	// 회원 가입 - 자바빈 초기화
 	@ModelAttribute
@@ -242,8 +239,6 @@ public class MemberController {
 		model.addAttribute("filename", "face.png");
 	}
 	
-	
-	
 	// 회원 비밀번호 변경 폼
 	@GetMapping("/member/changePassword")
 	public String formChangePassword() {
@@ -252,22 +247,62 @@ public class MemberController {
 	
 	// 회원 비밀번호 변경하기
 	@PostMapping("/member/changePassword")
-	public String changePassword(@Valid MemberVO memberVO, HttpSession session, BindingResult result) {
+	public String submitChangePassword(@Valid MemberVO memberVO,BindingResult result, HttpSession session,  Model model, HttpServletRequest request) {
+		log.debug("<< 비밀번호 변경 처리 >> : " + memberVO);
 		
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		
-		if(user == null) {
-			return "memberLogin";
-		} 
-		
-		if(result.hasFieldErrors("passwd")) {
+		// 유효성 체크 결과 오류 있다면 폼 호출하기
+		if(result.hasFieldErrors("now_passwd") || result.hasFieldErrors("passwd") || result.hasFieldErrors("captcha_chars")) {
 			return formChangePassword();
 		}
 		
+		// 캡챠 문자 체크 시작
+		// 캡챠 이미지 비교시 1로 세팅
+		String code = "1";	
+		// 캡챠 키 발급시 받은 키 값을 session에 저장했기 때문에 불러오기 가능
+		String key=(String)session.getAttribute("captcha_key"); 
+		// 사용자가 입력한 캡챠 이미지 글자값 
+		String value = memberVO.getCaptcha_chars();
+		// code, key, value 값을 모두 넣어준다
+		String key_apiURL="https://openapi.naver.com/v1/captcha/nkey?code="+code+"&key="+ key+"&value="+value;
+		
+		Map<String,String> requestHeaders= new HashMap<String, String>();
+		requestHeaders.put("X-Naver-Client-Id", "HNtvT0vO0xB9fEP5czzq");
+		requestHeaders.put("X-Naver-Client-Secret", "853al0auHW");
+		
+		// 값을 전달받기	// apiURL, requestHeaders의 값을 전달
+		String responseBody = CaptchaUtil.get(key_apiURL, requestHeaders);
+		
+		log.debug("<< 캡챠 결과 >> : " + responseBody);
+		
+		// json object로 변환 시켜준다
+		JSONObject jObject = new JSONObject(responseBody);
+		// 캡챠의 결과를 불리언 값으로 받는다
+		boolean captcha_result = jObject.getBoolean("result");
+		// 만약 일치하지 않았다면 invalidCaptcha 에러 코드를 생성한다.
+		if(!captcha_result) {
+			result.rejectValue("captcha_chars", "invalidCaptcha");
+		}
+		// 캡챠 문자 체크 종료
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		memberVO.setMem_num(user.getMem_num());
+		
+		MemberVO db_member = memberService.selectMember(memberVO.getMem_num());
+		
+		// form 에서 전송한 현재 비번이랑 db에서 읽어온 비번이랑 일치 여부 체크하기
+		if(!db_member.getPasswd().equals(memberVO.getNow_passwd())) {
+			result.rejectValue("now_passwd", "invalidPassword");
+			return formChangePassword();
+		}
+		// 비밀번호 수정
 		memberService.updatePassword(memberVO);
 		
-		return "redirect:/member/myPage";
+		// 설정되어있는 자동 로그인 기능 해제한다()
+		memberService.deleteAu_id(memberVO.getMem_num());
+		//  UI 문구 처리
+		model.addAttribute("message","비밀번호 변경이 완료되었습니다. 재접속시 설정되어있는 자동로그인 기능이 해제됩니다.");
+		model.addAttribute("url", request.getContextPath()+"/member/myPage");
+		
+		return "common/resultAlert";
 	}
 	
 	
@@ -275,16 +310,13 @@ public class MemberController {
 	// 캡챠 이미지 호출
 	@GetMapping("/member/getCaptcha")
 	public String getCaptcha(Model model, HttpSession session) {
-		// 강사님이 보내주신 정보
-		String clientId = "HNtvT0vO0xB9fEP5czzq";
-		String clientSecret = "853al0auHW";
 		
 		String code = "0";	// 키 발급시 0, 캡챠 이미지 비교시 1로 세팅
 		String key_apiURL="https://openapi.naver.com/v1/captcha/nkey?code=" + code;
 		
 		Map<String,String> requestHeaders= new HashMap<String, String>();
-		requestHeaders.put("X-Naver-Client-Id", clientId);
-		requestHeaders.put("X-Naver-Client-Secret", clientSecret);
+		requestHeaders.put("X-Naver-Client-Id", "HNtvT0vO0xB9fEP5czzq");
+		requestHeaders.put("X-Naver-Client-Secret", "853al0auHW");
 		
 		String responseBody = CaptchaUtil.get(key_apiURL, requestHeaders);
 		
@@ -299,12 +331,8 @@ public class MemberController {
 			
 			String apiURL = "https://openapi.naver.com/v1/captcha/ncaptcha.bin?key=" + key;
 			
-			Map<String,String> requestHeaders2= new HashMap<String, String>();
-			requestHeaders.put("X-Naver-Client-Id", clientId);
-			requestHeaders.put("X-Naver-Client-Secret", clientSecret);
-			
 			// byte 배열에 image 넣어주기 (불러온 정보들)
-			byte[] response_byte = CaptchaUtil.getCaptchaImage(apiURL, requestHeaders2);
+			byte[] response_byte = CaptchaUtil.getCaptchaImage(apiURL, requestHeaders);
 			
 			model.addAttribute("imageFile",response_byte);
 			model.addAttribute("filename","captcha.jpg");

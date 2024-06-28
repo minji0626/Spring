@@ -5,7 +5,6 @@
 <div class="page-main">
 	<h2>비밀번호 변경</h2>
 	<form:form action="changePassword" id="member_change" modelAttribute="memberVO">
-		<form:hidden path="mem_num"/>
 		<ul>
 			<li>
 				<form:label path="now_passwd">현재 비밀번호</form:label>
@@ -43,6 +42,8 @@
 						});
 					});
 				</script>
+				<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+				<script type="text/javascript" src="${pageContext.request.contextPath}/js/member.password.js"></script>
 			</li>
 			<li>
 				<form:label path="captcha_chars">문자 확인</form:label>

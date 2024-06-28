@@ -30,7 +30,12 @@ public class AppConfig implements WebMvcConfigurer{
 		// 회원제 서비스마다 등록해준다고 생각하면 될 듯
 		// 너무 파일이 많아진다면 *표시로도 추가가 가능함 지금 당장은 쓰이는 페이지가 얼마 없기 때문에 하나 하나 다 등록해준다
 		registry.addInterceptor(loginCheck).addPathPatterns("/member/myPage")
-										   .addPathPatterns("/member/update");
+										   .addPathPatterns("/member/update")
+										   .addPathPatterns("/member/changePassword")
+										   .addPathPatterns("/member/delete")
+										   .addPathPatterns("/board/write")
+										   .addPathPatterns("/board/update")
+										   .addPathPatterns("/board/delete");
 	}
 	
 	@Bean
@@ -40,7 +45,8 @@ public class AppConfig implements WebMvcConfigurer{
 		// XML 설정 파일 경로 지정 -> 배열이기 때문에 다양한 파일 지정 가능함
 		configurer.setDefinitions(new String[] {
 				"/WEB-INF/tiles-def/main.xml",
-				"/WEB-INF/tiles-def/member.xml"
+				"/WEB-INF/tiles-def/member.xml",
+				"/WEB-INF/tiles-def/board.xml"
 		});
 		configurer.setCheckRefresh(true);
 		return configurer;

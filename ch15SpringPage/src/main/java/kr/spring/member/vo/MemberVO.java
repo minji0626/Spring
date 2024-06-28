@@ -33,7 +33,7 @@ public class MemberVO {
 	private String passwd;
 	
 	// 비밀번호 변경에만 조건 체크
-	@Pattern(regexp = "^[0-9a-zA-Z]$")
+	@Pattern(regexp = "^[0-9a-zA-Z]+$")
 	private String captcha_chars;
 	
 	@NotBlank
