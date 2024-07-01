@@ -214,6 +214,16 @@ public class MemberController {
 		return "imageView";
 	}
 	
+	// 프초필 사진 출력하기
+	@GetMapping("/member/viewProfile")
+	public String getProfileByMem_num(long mem_num, HttpServletRequest request, Model model) {
+		MemberVO memberVO = memberService.selectMember(mem_num);
+		
+		viewProfile(memberVO, request, model);
+		
+		return "imageView";
+	}
+	
 	// 회원 프로필 사진 처리를 위한 공통 코드
 	// 이미지가 없는 경우 -> basicprofileimage 메서드를 호출한다
 	// 이미지가 있는 경우 -> imagefile과 filename을 읽어온다

@@ -44,7 +44,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void updateBoard(BoardVO board) {
-		
+		boardMapper.updateBoard(board);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void deleteFile(Long board_num) {
-		
+		boardMapper.deleteFile(board_num);
 	}
 	
 	

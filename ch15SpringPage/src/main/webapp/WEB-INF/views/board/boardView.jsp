@@ -30,8 +30,25 @@
 	<hr size="1" width="100%">
 	<div class="align-right">
 	<c:if test="${!empty user && board.mem_num == user.mem_num}">
-		<input type="button" value="수정">
-		<input type="button" value="삭제">
+		<input type="button" value="수정" onclick="location.href='update?board_num=${board.board_num}'">
+		<input type="button" value="삭제" id="delete_btn">
+		<script type="text/javascript">
+		const delete_btn = document.getElementById('delete_btn');
+		delete_btn.onclick=function(){
+			const choice = confirm('삭제하시겠습니까?');
+			if(choice){
+				location.replace('delete?board_num=${board.board_num}');
+			}
+		}
+		</script>
 	</c:if>
+	
+	<input type="button" value="목록" onclick="location.href='list'">
 	</div>
+	<hr size="1" width="100%">
+	<!-- 댓글 UI 시작 -->
+	
+	<!-- 댓글 목록 출력 -->
+	
+	<!-- 댓글 UI 종료 -->
 </div>

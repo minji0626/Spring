@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.board.service.BoardService;
@@ -115,10 +114,10 @@ public class BoardController {
 	}
 	
 	
-	/* ====================
+	/* =======================
 	 * 게시판 글 상세 불러오기
-	 * ====================
-	 * */
+	 * =======================
+	 */
 	
 	@GetMapping("/board/detail")
 	public ModelAndView process(long board_num) {
@@ -138,6 +137,56 @@ public class BoardController {
 		
 		return new ModelAndView("boardView","board",board);
 	}
+
+	// 파일 다운로드하기
+	@GetMapping("/board/file")
+	public String download(long board_num, HttpServletRequest request, Model model) {
+		
+		BoardVO board = boardService.selectBoard(board_num);
+		byte[] downloadFile = FileUtil.getBytes(request.getServletContext().getRealPath("/upload")+"/"+board.getFilename());
+		model.addAttribute("downloadFile",downloadFile);
+		model.addAttribute("filename", board.getFilename());
+		return "downloadView";
+	}
 	
+	// 게시판 글 수정하기
+	// 수정폼
+	@GetMapping("/board/update")
+	public String formUpdate(long board_num, Model model) {
+		
+		BoardVO boardVO = boardService.selectBoard(board_num);
+		
+		model.addAttribute("boardVO",boardVO);
+		return "boardModify";
+	}
 	
+	// 수정하기
+	@PostMapping("/board/update")
+	public String submitUpdate(@Valid BoardVO boardVO, BindingResult result, HttpSession session,HttpServletRequest request,Model model) throws IllegalStateException, IOException {
+		
+		log.debug("<< 글 업데이트 >> : " + boardVO);
+		
+		if(result.hasErrors()) {
+			// title, content 가 입력되지 않아서 유효성 체크에 걸리면 파일 정보를 잃어버린다.
+			BoardVO vo = boardService.selectBoard(boardVO.getBoard_num());
+			boardVO.setFilename(vo.getFilename());
+			return "boardModify";
+		}
+		
+		// 회원 번호 세팅하기
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		boardVO.setMem_num(user.getMem_num());
+		// IP 세팅하기
+		boardVO.setIp(request.getRemoteAddr());
+		// 파일 업로드하기
+		boardVO.setFilename(FileUtil.createFile(request, boardVO.getUpload()));
+		
+		boardService.updateBoard(boardVO);
+		
+		//  UI 문구 처리
+		model.addAttribute("message","글 수정이 완료되었습니다.");
+		model.addAttribute("url", request.getContextPath()+"/board/list");
+				
+		return "common/resultAlert";
+	}
 }

@@ -19,4 +19,16 @@
 		<put-attribute name="body" value="/WEB-INF/views/board/boardWrite.jsp" />
 	</definition>
 	
+	<definition name="boardView" extends="main">
+		<put-attribute name="title" value="Board View"/>
+		<put-attribute name="css" value="/WEB-INF/views/board/boardCSS.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/board/boardView.jsp" />
+	</definition>
+	
+	<definition name="boardModify" extends="main">
+		<put-attribute name="title" value="Board Modify"/>
+		<put-attribute name="css" value="/WEB-INF/views/board/boardCSS.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/board/boardModify.jsp" />
+	</definition>
+	
 </tiles-definitions>

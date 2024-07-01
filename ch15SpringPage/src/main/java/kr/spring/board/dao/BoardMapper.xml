@@ -94,4 +94,20 @@
 		SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM spboard JOIN spmember USING(mem_num)<include refid="boardSearch"></include> <include refid="boardOrder"></include>)a)
 		<![CDATA[WHERE rnum >= #{start} AND rnum <= #{end}]]>
 	</select>
+	
+	<!-- 게시글 수정하기 -->
+	
+	<update id="updateBoard" parameterType="boardVO">
+		UPDATE spboard SET
+		<if test="filename != null">
+			upload = #{upload},
+		</if>
+		title = #{title},
+		content = #{content},
+		ip = #{ip},
+		modify_date = SYSDATE
+		WHERE board_num = #{board_num}
+	</update>
+	
+	
  </mapper>
