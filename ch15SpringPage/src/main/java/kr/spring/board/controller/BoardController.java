@@ -1,6 +1,9 @@
 package kr.spring.board.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,11 +18,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.board.service.BoardService;
 import kr.spring.board.vo.BoardVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.FileUtil;
+import kr.spring.util.PagingUtil;
+import kr.spring.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -72,9 +78,9 @@ public class BoardController {
 	}
 	
 	
-	/* =============
-	 * 게시판 목록
-	 * =============
+	/* ====================
+	 * 게시판 목록 불러오기
+	 * ====================
 	 * */
 	@GetMapping("/board/list")
 	public String getList(@RequestParam(defaultValue = "1") int pageNum, 
@@ -82,7 +88,56 @@ public class BoardController {
 							String keyfield, String keyword, Model model) {
 		log.debug("<< 게시판 목록 - category >> : " + category);
 		log.debug("<< 게시판 목록 - order >> : " + order);
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("category", category);
+		map.put("keyfield", keyfield);
+		map.put("keyword", keyword);
+		
+		int count = boardService.selectRowCount(map);
+		
+		PagingUtil page = new PagingUtil(keyfield,keyword,pageNum,count,20,10,"list","&category="+category+"&order="+order);
+		
+		List<BoardVO> list = null;
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			map.put("order", order);
+			
+			list = boardService.selectList(map);
+		}
+		
+		model.addAttribute("list", list);
+	    model.addAttribute("count", count);
+	    model.addAttribute("page", page.getPage());
 		
 		return "boardList";
 	}
+	
+	
+	/* ====================
+	 * 게시판 글 상세 불러오기
+	 * ====================
+	 * */
+	
+	@GetMapping("/board/detail")
+	public ModelAndView process(long board_num) {
+		
+		log.debug("<< 게시판 번호 >> : " + board_num);
+		
+		// 해당 글의 조회수 증가시키기
+		boardService.updateHit(board_num);
+		
+		BoardVO board = boardService.selectBoard(board_num);
+		
+		// 제목에 태그를 허용하지 않는다
+		board.setTitle(StringUtil.useNoHTML(board.getTitle()));
+		
+		board.setContent(StringUtil.useBrNoHTML(board.getContent()));
+		
+		
+		return new ModelAndView("boardView","board",board);
+	}
+	
+	
 }

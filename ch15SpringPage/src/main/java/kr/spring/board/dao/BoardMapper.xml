@@ -26,4 +26,72 @@
 	#{ip},
 	#{mem_num})
 	</insert>
+	
+	<!-- include를 사용할 수 있음(조각을 만들어서 붙이고 안 붙이고 가능함)조건 체크 할 때 좋을듯? -->
+	<!-- sql 태그와 include 태그를 이용해서 SQL문을 재사용한다 -->
+	<!-- 검색할 때 사용 -->
+	<sql id="boardSearch">
+		<where>
+			<!-- 카테고리가 널이 아니고, 비어있지 않으면 -->
+			<if test="category != null and category != ''">
+				category = #{category}
+			</if>
+			
+			<if test="keyword != null and keyword != ''">
+				<!-- 카테고리가 있다면 AND로 연결시켜준다 -->
+				<if test="category != null and category != ''">
+				AND
+				</if>
+					<!-- keyfield가 1이면 제목에서 검색 -->
+					<if test="keyfield == 1">
+						title LIKE '%' || #{keyword} || '%'
+					</if>
+					<!-- keyfield가 2이면 아이디 또는 닉네임에서 검색 -->
+					<if test="keyfield == 2">
+						(id LIKE '%' || #{keyword} || '%' OR
+						nick_name LIKE '%' || #{keyword} || '%')
+					</if>
+					<!-- keyfield가 3이면 내용에서 검색 -->
+					<if test="keyfield == 3">
+						content LIKE '%' || #{keyword} || '%'
+					</if>
+					<!-- keyfiled가 4이면 제목 또는 내용에서 검색 -->
+					<if test="keyfield == 4">
+						(title LIKE '%' || #{keyword} || '%' OR
+						content LIKE '%' || #{keyword} || '%')
+					</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 정렬할 때 사용 -->
+	<sql id="boardOrder">
+		<!-- 게시글 번호 순 -->
+		<if test="order == 1">
+			ORDER BY board_num DESC
+		</if>
+		<!-- 조회수 순 -->
+		<if test="order == 2">
+			ORDER BY hit DESC
+		</if>
+		<!-- 좋아요 순으로 정렬하는데 NULL값은 맨 뒤로 가게 설정 -->
+		<if test="order == 3">
+			ORDER BY fav_cnt DESC NULLS LAST
+		</if>
+		<!-- 댓글수 순 -->
+		<if test="order == 4">
+			ORDER BY re_cnt DESC NULLS LAST
+		</if>
+	</sql>
+	
+	<!-- 게시판 글 총 레코드수/ 검색 레코드수 구하기 -->
+	<select id="selectRowCount" parameterType="map" resultType="integer">
+		SELECT COUNT(*) FROM spboard JOIN spmember USING(mem_num)
+		<include refid="boardSearch"></include>
+	</select>
+	
+	<!-- 게시판 전체 목록/ 검색 목록 -->
+	<select id="selectList"	parameterType="map" resultType="boardVO">
+		SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM spboard JOIN spmember USING(mem_num)<include refid="boardSearch"></include> <include refid="boardOrder"></include>)a)
+		<![CDATA[WHERE rnum >= #{start} AND rnum <= #{end}]]>
+	</select>
  </mapper>
