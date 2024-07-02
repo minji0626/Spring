@@ -4,7 +4,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 글 등록 시작 -->
 <div class="page-main">
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/ckeditor.js"></script>
+<script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
 	<h2>글 수정</h2>
 	<form:form action="update" id="board_modify" enctype="multipart/form-data" modelAttribute="boardVO">
 	<form:hidden path="board_num"/>
@@ -21,17 +24,34 @@
 				<form:errors element="div" path="category" cssClass="error-color-reg"/>
 			</li>
 			<li>
-				<form:label path="title">제목</form:label>
-				<form:input path="title" />
+				<form:input path="title" placeholder="제목을 입력하세요." />
 				<form:errors element="div" path="title" cssClass="error-color-reg"/>
 			</li>
 			<li>
-				<form:label path="content">내용</form:label>
-				<form:textarea path="content"/>
+				<form:textarea path="content" placeholder="내용을 입력하세요."/>
 				<form:errors element="div" path="content" cssClass="error-color-reg"/>
+				<script>
+				 function MyCustomUploadAdapterPlugin(editor) {
+					    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+					        return new UploadAdapter(loader);
+					    }
+					}
+				 
+				 ClassicEditor
+		            .create( document.querySelector( '#content' ),{
+		            	extraPlugins: [MyCustomUploadAdapterPlugin]
+		            })
+		            .then( editor => {
+						window.editor = editor;
+					} )
+		            .catch( error => {
+		                console.error( error );
+		            } );
+			    </script>
+				
 			</li>
 			<li>
-				<form:label path="upload">파일 등록</form:label>
+				<form:label path="upload" cssStyle="margin-top: 10px;">파일 등록</form:label>
 				<input type="file" id="upload" name="upload">
 				<c:if test="${!empty boardVO.filename }">
 					<div id="file_detail">

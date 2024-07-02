@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/videoAdapter.js"></script>
+<script src="${pageContext.request.contextPath}/js/board.fav.js"></script>
 <div class="page-main">
 	<h2>${board.title }</h2>
 	<ul class="detail-info">
@@ -26,6 +29,13 @@
 	</c:if>
 	<div class="detail-content">
 		${board.content }
+	</div>
+	<div>
+		<!-- 좋아요 -->
+		<img id="output_fav" data-num="${board.board_num }" src="${pageContext.request.contextPath}/images/fav01.gif">
+		<span id="output_fcount"></span>
+		
+		<!-- 댓글 개수 -->
 	</div>
 	<hr size="1" width="100%">
 	<div class="align-right">

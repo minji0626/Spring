@@ -9,16 +9,17 @@ form#search_form #order {
 /* 게시판 폼
 ---------------------*/
 /* CK 에디터 사용시 등록& 수정 폼 */
-form#register_form, form#update_form {
+form#board_register, form#board_modify {
 	padding: 0 0 10px 0;
 	width: 800px;
 }
-form#register_form ul, form#update_form ul{
+form#board_register ul, form#board_modify ul{
 	padding: 20px;
 }
-form#register_form input[type="text"], form#update_form input[type="text"]{
+form#board_register input[type="text"], form#board_modify input[type="text"]{
 	width: 759px;
 	margin-bottom: 10px;
+	margin-top: 10px;
 }
 
 /* CK 에디터에서만 사용되는 css */
@@ -58,8 +59,17 @@ ul.detail-sub li:last-child {
 	line-height: 250%;
 }
 
-#output_fav {
+.detail-content img{
+	max-width : 940px;
+}
+
+#output_fav, .output_rfav {
 	cursor: pointer;
+}
+
+#output_fcount {
+	width : 50px;
+	display: inline-block;
 }
 
 div#reply_div {
@@ -121,7 +131,7 @@ form#mre_form {
 }
 
 /* 나중에 지워질 애들임 */
-input[type="text"],input[type="password"],textarea {
+input[type="text"],input[type="password"]{
     width: 60%;
     padding: 8px 10px;
     border: 1.5px solid #ccc;

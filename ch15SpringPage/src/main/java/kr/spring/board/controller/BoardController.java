@@ -132,7 +132,7 @@ public class BoardController {
 		// 제목에 태그를 허용하지 않는다
 		board.setTitle(StringUtil.useNoHTML(board.getTitle()));
 		
-		board.setContent(StringUtil.useBrNoHTML(board.getContent()));
+		//board.setContent(StringUtil.useBrNoHTML(board.getContent()));
 		
 		
 		return new ModelAndView("boardView","board",board);
@@ -173,20 +173,50 @@ public class BoardController {
 			return "boardModify";
 		}
 		
-		// 회원 번호 세팅하기
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		boardVO.setMem_num(user.getMem_num());
-		// IP 세팅하기
-		boardVO.setIp(request.getRemoteAddr());
-		// 파일 업로드하기
+		BoardVO db_board = boardService.selectBoard(boardVO.getBoard_num());
 		boardVO.setFilename(FileUtil.createFile(request, boardVO.getUpload()));
 		
+		// IP 세팅하기
+		boardVO.setIp(request.getRemoteAddr());
+		
 		boardService.updateBoard(boardVO);
+		
+		if(boardVO.getUpload() != null && !boardVO.getUpload().isEmpty()) {
+			FileUtil.removeFile(request, db_board.getFilename());
+		}
+		
+		//  UI 문구 처리
+		model.addAttribute("message","글 수정이 완료되었습니다.");
+		model.addAttribute("url", request.getContextPath()+"/board/detail?board_num="+boardVO.getBoard_num());
+				
+		return "common/resultAlert";
+	}
+	
+	
+	/* =======================
+	 * 게시판 글 삭제 
+	 * =======================
+	 */
+	
+	@GetMapping("/board/delete")
+	public String submitDelete(long board_num, HttpServletRequest request, Model model) {
+		
+		log.debug("<< 게시판 글 삭제 >> :" + board_num);
+		
+		// db에 저장된 파일 정보 구하기
+		BoardVO db_board = boardService.selectBoard(board_num);
+		
+		// 글 삭제
+		boardService.deleteBoard(board_num);
+		
+		if(db_board.getFilename() != null) {
+			FileUtil.removeFile(request, db_board.getFilename());
+		}
 		
 		//  UI 문구 처리
 		model.addAttribute("message","글 수정이 완료되었습니다.");
 		model.addAttribute("url", request.getContextPath()+"/board/list");
-				
+					
 		return "common/resultAlert";
 	}
 }
