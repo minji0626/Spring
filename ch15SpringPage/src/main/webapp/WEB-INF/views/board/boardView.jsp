@@ -5,6 +5,7 @@
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/videoAdapter.js"></script>
 <script src="${pageContext.request.contextPath}/js/board.fav.js"></script>
+<script src="${pageContext.request.contextPath}/js/board.reply.js"></script>
 <div class="page-main">
 	<h2>${board.title }</h2>
 	<ul class="detail-info">
@@ -30,9 +31,9 @@
 	<div class="detail-content">
 		${board.content }
 	</div>
-	<div>
+	<div class="fav_all">
 		<!-- 좋아요 -->
-		<img id="output_fav" data-num="${board.board_num }" src="${pageContext.request.contextPath}/images/fav01.gif">
+		<img id="output_fav" data-num="${board.board_num }" src="${pageContext.request.contextPath}/images/fav01.gif" width="40">
 		<span id="output_fcount"></span>
 		
 		<!-- 댓글 개수 -->
@@ -57,8 +58,31 @@
 	</div>
 	<hr size="1" width="100%">
 	<!-- 댓글 UI 시작 -->
-	
+	<div id="reply_div">
+		<span class="re-title">댓글 달기</span>
+		<form id="re_form">
+			<input type="hidden" name="board_num" id="board_num" value="${board.board_num }">
+			<textarea rows="3" cols="50" name="re_content" id="re_content" class="rep-content"
+			<c:if test="${empty user}">disabled="disabled"</c:if>
+			><c:if test="${empty user}">로그인 후 작성 가능합니다.</c:if></textarea>
+			<c:if test="${!empty user}">
+			<div id="re_first">
+				<span class="letter-count">300/300</span>
+			</div>
+			<div id="re_second" class="align-right">
+				<input type="submit" value="등록">
+			</div>
+			</c:if>
+		</form>
+		
+	</div>
 	<!-- 댓글 목록 출력 -->
-	
+	<div id="output"></div>
+	<div id="loading" style="display:none">
+		<img src="${pageContext.request.contextPath}/images/loading.gif" width="30" height="30">
+	</div>
+	<div class="paging-button" style="display:none;">
+		<input type="button" value="더보기">
+	</div>
 	<!-- 댓글 UI 종료 -->
 </div>

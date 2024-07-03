@@ -92,15 +92,17 @@
 
 	<!-- 게시판 전체 목록/ 검색 목록 -->
 	<select id="selectList" parameterType="map" resultType="boardVO">
-		SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM spboard
-		JOIN spmember USING(mem_num)
+		SELECT * FROM (
+			SELECT a.*, rownum rnum FROM (
+				SELECT * FROM spboard LEFT OUTER JOIN (
+					SELECT COUNT(*) fav_cnt, board_num FROM spboard_fav GROUP BY board_num) USING(board_num)
+						JOIN spmember USING(mem_num)
 		<include refid="boardSearch"></include>
 		<include refid="boardOrder"></include>)a)
 		<![CDATA[WHERE rnum >= #{start} AND rnum <= #{end}]]>
 	</select>
 
 	<!-- 게시글 수정하기 -->
-
 	<update id="updateBoard" parameterType="boardVO">
 		UPDATE spboard SET
 		<if test="filename != null">
@@ -112,6 +114,23 @@
 		modify_date = SYSDATE
 		WHERE board_num = #{board_num}
 	</update>
+	
+	
+	
+	<!-- 댓글 등록하기 -->
+	<insert id="insertReply" parameterType="boardReplyVO">
+	INSERT INTO spboard_reply(re_num, re_content, re_ip, board_num, mem_num) 
+		VALUES(spboard_reply_seq.nextval, #{re_content}, #{re_ip}, #{board_num},#{mem_num})
+	</insert>
 
+	
+	<!-- 댓글 목록 불러오기 -->
+	<select id="selectListReply" parameterType="map" resultType="boardReplyVO">
+	SELECT * FROM (SELECT a.*, rownum rnum FROM (
+		SELECT * 
+			FROM spboard_reply JOIN spmember USING(mem_num)
+			WHERE board_num=#{board_num} ORDER BY re_num DESC)a)
+		<![CDATA[WHERE rnum >= #{start} AND rnum <= #{end}]]>
+	</select>
 
 </mapper>

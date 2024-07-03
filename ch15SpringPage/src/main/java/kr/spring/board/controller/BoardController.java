@@ -219,4 +219,6 @@ public class BoardController {
 					
 		return "common/resultAlert";
 	}
+	
+	
 }

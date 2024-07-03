@@ -1,22 +1,28 @@
 package kr.spring.board.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.board.service.BoardService;
 import kr.spring.board.vo.BoardFavVO;
+import kr.spring.board.vo.BoardReplyVO;
 import kr.spring.board.vo.BoardVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.FileUtil;
+import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -119,5 +125,85 @@ public class BoardAjaxController {
 		return  mapJson;
 	}
 	
+	
+
+	/* =======================
+	 * 게시판 댓글 작성
+	 * =======================
+	 */
+	
+	@PostMapping("/board/writeReply")
+	@ResponseBody
+	public Map<String, String> writeReply(BoardReplyVO boardReplyVO, HttpSession session,
+										  HttpServletRequest request){
+		
+		log.debug("<< 댓글 등록 >>  : " +  boardReplyVO);
+		
+		Map<String, String> mapJson = new HashMap<String, String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user == null) {
+			mapJson.put("result", "logout");
+		} else {
+			// 로그인 된 경우 정보 처리하기
+			boardReplyVO.setMem_num(user.getMem_num());
+			
+			// ip 저장하기
+			boardReplyVO.setRe_ip(request.getRemoteAddr());
+			 
+			boardService.insertReply(boardReplyVO);
+			mapJson.put("result", "success");
+		}
+		return mapJson;
+	}
+	
+	@GetMapping("/board/listReply")
+	@ResponseBody
+	public Map<String, Object> listReply(int board_num, int pageNum, int rowCount,
+										 HttpSession session){
+		
+		log.debug("<< 댓글 목록 - board_num >> : " + board_num);
+		log.debug("<< 댓글 목록 - pageNum >> : " + pageNum);
+		log.debug("<< 댓글 목록 - rowCount >> : " + rowCount);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("board_num", board_num);
+		
+        int count = boardService.selectRowCountReply(map);
+        
+        log.debug("<< 댓글 개수 >> : " + count);
+        
+        // 페이지 처리하기
+        PagingUtil page = new PagingUtil(pageNum, count, rowCount);
+        map.put("start", page.getStartRow());
+    	map.put("end", page.getEndRow());
+    	
+    	MemberVO user = (MemberVO)session.getAttribute("user");
+    	
+    	if(user != null) {
+    		map.put("mem_num", user.getMem_num());
+    	} else {
+    		map.put("mem_num", 0);
+    	}
+
+        List<BoardReplyVO> list = null;
+        if (count > 0) {
+            list = boardService.selectListReply(map);
+        } else {
+        	list = Collections.emptyList();
+        }
+        Map<String, Object> mapJson = new HashMap<String, Object>();
+        
+        mapJson.put("count", count);
+        mapJson.put("list", list);
+        if(user!=null) {
+        	mapJson.put("user_num", user.getMem_num());
+        }
+        mapJson.put("result", "success");
+
+        return mapJson;
+    }
 	
 }
