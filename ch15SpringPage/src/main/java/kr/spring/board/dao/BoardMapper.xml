@@ -94,9 +94,16 @@
 	<select id="selectList" parameterType="map" resultType="boardVO">
 		SELECT * FROM (
 			SELECT a.*, rownum rnum FROM (
-				SELECT * FROM spboard LEFT OUTER JOIN (
-					SELECT COUNT(*) fav_cnt, board_num FROM spboard_fav GROUP BY board_num) USING(board_num)
-						JOIN spmember USING(mem_num)
+				SELECT 
+				board_num,
+				<![CDATA[
+				REPLACE(REPLACE(title,'<','&lt;'),'>','&gt;') title,
+				]]>
+				hit, filename, reg_date, mem_num, id, nick_name, re_cnt, fav_cnt
+				FROM spboard 
+				LEFT OUTER JOIN (SELECT COUNT(*) re_cnt, board_num FROM spboard_reply GROUP BY board_num) USING(board_num) 
+				LEFT OUTER JOIN (SELECT COUNT(*) fav_cnt, board_num FROM spboard_fav GROUP BY board_num) USING(board_num)
+				JOIN spmember USING(mem_num)
 		<include refid="boardSearch"></include>
 		<include refid="boardOrder"></include>)a)
 		<![CDATA[WHERE rnum >= #{start} AND rnum <= #{end}]]>

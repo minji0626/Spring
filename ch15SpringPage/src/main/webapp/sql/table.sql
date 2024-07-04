@@ -71,6 +71,27 @@ constraint reply_spboard_fk2 foreign key (mem_num) references spmember (mem_num)
 create sequence spboard_reply_seq;
 
 
+-- 댓글 좋아요
+create table spreply_fav(
+re_num number not null,
+mem_num number not null,
+constraint refav_fk1 foreign key (re_num) references spboard_reply (re_num),
+constraint refav_fk2 foreign key (mem_num) references spmember (mem_num)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

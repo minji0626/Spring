@@ -37,6 +37,7 @@
 		<span id="output_fcount"></span>
 		
 		<!-- 댓글 개수 -->
+		<span id="output_rcount"></span>
 	</div>
 	<hr size="1" width="100%">
 	<div class="align-right">

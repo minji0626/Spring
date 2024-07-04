@@ -159,6 +159,10 @@ form#mre_form {
 	margin: 5px;
 }
 
+div.item{
+	margin-top: 10px;
+}
+
 /* 나중에 지워질 애들임 */
 input[type="text"],input[type="password"],textarea{
     width: 60%;

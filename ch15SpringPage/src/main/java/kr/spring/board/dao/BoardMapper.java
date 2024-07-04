@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.board.vo.BoardFavVO;
+import kr.spring.board.vo.BoardReFavVO;
 import kr.spring.board.vo.BoardReplyVO;
 import kr.spring.board.vo.BoardVO;
 
@@ -45,23 +46,33 @@ public interface BoardMapper {
 	
 	// 댓글
 	public List<BoardReplyVO> selectListReply(Map<String, Object> map);
-	
 	@Select("SELECT COUNT(*) FROM spboard_reply WHERE board_num=#{board_num}")
 	public Integer selectRowCountReply(Map<String, Object> map);
-	
+	// 댓글 수정, 삭제시 작성자 회원 번호를 구하기 위해 사용한다
+	@Select("SELECT * FROM spboard_reply WHERE re_num=#{re_num}")
 	public BoardReplyVO selectReply(Long re_num);
 	public void insertReply(BoardReplyVO boardReply);
+	@Update("UPDATE spboard_reply SET re_content=#{re_content}, re_ip=#{re_ip}, re_mdate=SYSDATE WHERE re_num=#{re_num}")
 	public void updateReply(BoardReplyVO boardReply);
+	@Delete("DELETE FROM spboard_reply WHERE re_num=#{re_num}")
 	public void deleteReply(Long re_num);
 	// 부모글 삭제시 댓글이 존재하면 부모글 삭제전 댓글 삭제
+	@Delete("DELETE FROM spboard_reply WHERE board_num=#{board_num}")
 	public void deleteReplyByBoardNum(Long board_num);
 	// 부모글 삭제시 댓글의 답글이 존재하면 댓글 번호를 구해서 답글 삭제시 사용
+	@Select("SELECT * FROM spboard_reply WHERE board_num=#{board_num}")
 	public List<Long> selectReNumsByBoard_num(Long board_num);
 	
 	
 	// 댓글 좋아요
-	
-	
+	@Select("SELECT * FROM spreply_fav WHERE re_num=#{re_num} AND mem_num=#{mem_num}")
+	public BoardReFavVO selectReFav(BoardReFavVO fav);
+	@Select("SELECT COUNT(*) FROM spreply_fav WHERE re_num=#{re_num}")
+	public Integer selectReFavCount(Long re_num);
+	public void insertReFav(BoardReFavVO fav);
+	public void deleteReFav(BoardReFavVO fav);
+	public void deleteReFavByReNum(Long re_num);
+	public void deleteReFavByBoardNum(Long board_num);
 	
 	// 대댓글
 }

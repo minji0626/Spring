@@ -59,20 +59,20 @@
 	
 	<c:if test="${count > 0}">
 	<table class="striped-table">
-		<tr>
+		<tr class="">
 			<th>번호</th>
 			<th width="400">제목</th>
 			<th>작성자</th>
 			<th>작성일</th>
-			<th>카테고리</th>
 			<th>조회수</th>
 			<th>좋아요수</th>
+			<th>댓글 수</th>
 		</tr>
 		
 		<c:forEach var="board" items="${list}">
 		<tr>
 			<td class="align-center">${board.board_num}</td>
-			<td class="align-left"><a href="detail?board_num=${board.board_num}">${board.title}(${board.re_cnt })</a></td>
+			<td class="align-left"><a href="detail?board_num=${board.board_num}">${board.title }</a></td>
 			<td class="align-center">
 				<c:if test="${ empty board.nick_name }">
 					${board.id}
@@ -82,14 +82,9 @@
 				</c:if>
 			</td>
 			<td class="align-center">${board.reg_date}</td>
-			<td class="align-center">
-			<c:if test="${board.category == 1 }">자바</c:if>
-			<c:if test="${board.category == 2 }">데이터베이스</c:if>
-			<c:if test="${board.category == 3 }">자바스크립트</c:if>
-			<c:if test="${board.category == 4}">기타</c:if>
-			</td>
 			<td class="align-center">${board.hit }</td>
 			<td class="align-center">${board.fav_cnt }</td>
+			<td class="align-center">${board.re_cnt }</td>
 		</tr>
 		</c:forEach>
 	</table>
