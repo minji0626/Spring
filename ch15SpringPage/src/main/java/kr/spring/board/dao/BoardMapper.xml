@@ -132,10 +132,13 @@
 
 	
 	<!-- 댓글 목록 불러오기 -->
+	<!-- 로그인한 상태에서 클릭한 사람의 정보 읽기, 로그인 하지 않으면 0을 전달한다. -->
 	<select id="selectListReply" parameterType="map" resultType="boardReplyVO">
 	SELECT * FROM (SELECT a.*, rownum rnum FROM (
 		SELECT * 
 			FROM spboard_reply JOIN spmember USING(mem_num)
+			LEFT OUTER JOIN (SELECT re_num, mem_num click_num FROM spreply_fav WHERE mem_num=#{mem_num}) USING(re_num)
+			LEFT OUTER JOIN (SELECT re_num, COUNT(*) refav_cnt FROM spreply_fav GROUP BY re_num) USING(re_num)
 			WHERE board_num=#{board_num} ORDER BY re_num DESC)a)
 		<![CDATA[WHERE rnum >= #{start} AND rnum <= #{end}]]>
 	</select>

@@ -251,36 +251,36 @@ public class BoardAjaxController {
 		
 	}
 	
-	// 댓글 좋아요 읽기
-	@GetMapping("/board/getReFav")
+	// 댓글 좋아요 등록
+	@PostMapping("/board/writeReFav")
 	@ResponseBody
-	public Map<String, Object> getReFav(BoardReFavVO fav, HttpSession session) {
+	public Map<String, Object> writeReFav(BoardReFavVO fav, HttpSession session) {
 		
-		log.debug("<< 댓글 좋아요 >> : " + fav);
+		log.debug("<< 댓글 좋아요 등록 /  삭제하기>> : " + fav);
 		
 		Map<String, Object> mapJson = new HashMap<String, Object>();
 		
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		
 		if(user == null) {
-			mapJson.put("result", "success");
-			mapJson.put("status", "noFav");
+			mapJson.put("result", "logout");
 			
 		} else {
 			fav.setMem_num(user.getMem_num());
 			BoardReFavVO boardReFav = boardService.selectReFav(fav);
 			
 			if(boardReFav != null) {
-				mapJson.put("result", "success");
-				mapJson.put("status", "yesFav");
-			} else {
-				mapJson.put("result", "success");
+				boardService.deleteReFav(fav);
 				mapJson.put("status", "noFav");
+			} else {
+				boardService.insertReFav(fav);
+				mapJson.put("status", "yesFav");
 			}
+			mapJson.put("result", "success");
+			mapJson.put("count", boardService.selectReFavCount(fav.getRe_num())); 
 		}
-		mapJson.put("count", boardService.selectReFavCount(fav.getRe_num())); 
-		
 		return mapJson;
 	}
-
+	
+	
 }

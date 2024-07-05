@@ -26,7 +26,7 @@ public class BoardReplyVO {
 	// 로그인한 상태에서 클릭한 사람의 정보를 읽기, 로그인 하지 않으면 0을 전달
 	// 댓글 좋아요 작업
 	private int click_num;
-	private int refave_cnt;	// 댓글 좋아요 개수
+	private int refav_cnt;	// 댓글 좋아요 개수
 	
 	
 	// 답글

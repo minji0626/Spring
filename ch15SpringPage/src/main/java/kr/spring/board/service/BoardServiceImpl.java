@@ -127,7 +127,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public Integer selectReFavCount(Long re_num) {
-		return boardMapper.selectFavCount(re_num);
+		return boardMapper.selectReFavCount(re_num);
 	}
 
 	@Override
