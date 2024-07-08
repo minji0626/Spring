@@ -1,7 +1,5 @@
 package kr.spring.board.vo;
 
-import java.sql.Date;
-
 import kr.spring.util.DurationFromNow;
 import lombok.Getter;
 import lombok.Setter;

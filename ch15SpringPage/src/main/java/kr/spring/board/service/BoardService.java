@@ -3,9 +3,12 @@ package kr.spring.board.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
+
 import kr.spring.board.vo.BoardFavVO;
 import kr.spring.board.vo.BoardReFavVO;
 import kr.spring.board.vo.BoardReplyVO;
+import kr.spring.board.vo.BoardResponseVO;
 import kr.spring.board.vo.BoardVO;
 
 public interface BoardService {
@@ -56,5 +59,11 @@ public interface BoardService {
 	public void insertReFav(BoardReFavVO fav);
 
 	public void deleteReFav(BoardReFavVO fav);
-
+	
+	public List<BoardResponseVO> selectList(Long re_num);
+	public BoardResponseVO selectResponse(Long te_num);
+	public void insertResponse(BoardResponseVO boardResponse);
+	public void updateResponse(BoardResponseVO boardResponse);
+	public void deleteResponse(Long te_num);
+	
 }

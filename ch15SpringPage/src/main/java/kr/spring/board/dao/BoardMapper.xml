@@ -139,8 +139,15 @@
 			FROM spboard_reply JOIN spmember USING(mem_num)
 			LEFT OUTER JOIN (SELECT re_num, mem_num click_num FROM spreply_fav WHERE mem_num=#{mem_num}) USING(re_num)
 			LEFT OUTER JOIN (SELECT re_num, COUNT(*) refav_cnt FROM spreply_fav GROUP BY re_num) USING(re_num)
+			LEFT OUTER JOIN (SELECT re_num, COUNT(*) resp_cnt FROM spboard_response GROUP BY re_num) USING(re_num)
 			WHERE board_num=#{board_num} ORDER BY re_num DESC)a)
 		<![CDATA[WHERE rnum >= #{start} AND rnum <= #{end}]]>
 	</select>
+	
+	<!-- 답글 등록하기 -->
+	<insert id="insertResponse" parameterType="boardResponseVO">
+		INSERT INTO spboard_response(te_num, te_content, te_parent_num, te_depth, te_ip, re_num, mem_num) 
+						VALUES(response_seq.nextval, #{te_content}, #{te_parent_num}, #{te_depth}, #{te_ip}, #{re_num}, #{mem_num})
+	</insert>
 
 </mapper>

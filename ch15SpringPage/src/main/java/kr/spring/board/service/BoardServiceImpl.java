@@ -11,6 +11,7 @@ import kr.spring.board.dao.BoardMapper;
 import kr.spring.board.vo.BoardFavVO;
 import kr.spring.board.vo.BoardReFavVO;
 import kr.spring.board.vo.BoardReplyVO;
+import kr.spring.board.vo.BoardResponseVO;
 import kr.spring.board.vo.BoardVO;
 
 @Service
@@ -54,6 +55,7 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteBoard(Long board_num) {
 		
 		// 답글 삭제
+		boardMapper.deleteResponseByBoardNum(board_num);
 		// 댓글 좋아요 삭제
 		boardMapper.deleteReFavByBoardNum(board_num);
 		// 댓글 삭제
@@ -116,6 +118,9 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void deleteReply(Long re_num) {
+		// 답글 삭제
+		boardMapper.deleteResponseByReNum(re_num);
+		// 댓글 좋아요 삭제
 		boardMapper.deleteReFavByReNum(re_num);
 		boardMapper.deleteReply(re_num);
 	}
@@ -138,6 +143,31 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void deleteReFav(BoardReFavVO fav) {
 		boardMapper.deleteReFav(fav);
+	}
+
+	@Override
+	public List<BoardResponseVO> selectList(Long re_num) {
+		return boardMapper.selectList(re_num);
+	}
+
+	@Override
+	public BoardResponseVO selectResponse(Long te_num) {
+		return boardMapper.selectResponse(te_num);
+	}
+
+	@Override
+	public void insertResponse(BoardResponseVO boardResponse) {
+		boardMapper.insertResponse(boardResponse);
+	}
+
+	@Override
+	public void updateResponse(BoardResponseVO boardResponse) {
+		boardMapper.updateResponse(boardResponse);
+	}
+
+	@Override
+	public void deleteResponse(Long te_num) {
+		boardMapper.deleteResponse(te_num);
 	}
 	
 }

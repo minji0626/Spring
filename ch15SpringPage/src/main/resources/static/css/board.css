@@ -174,7 +174,7 @@ div#loading {
 	justify-content: center;
 }
 
-.modify-btn, .delete-btn {
+.modify-btn, .delete-btn, .resp-modify-btn, .resp-delete-btn, .response-btn, .response2-btn, .paging-button input {
 	padding: 4px 20px;
 	border: 1px solid #f0f2f1;
 	border-radius: 20px;
@@ -184,12 +184,37 @@ div#loading {
 	cursor: pointer;
 }
 
-.modify-btn:hover, .delete-btn:hover {
+.modify-btn:hover, .delete-btn:hover, .resp-modify-btn:hover, .resp-delete-btn:hover, 
+		.response-btn:hover, .response2-btn:hover, .paging-button input:hover {
 	background-color: #e1e3e2;
 	color: #000000;
-	transition: 0.2 ease-out;
 	height: 30px;
 }
+
+.rescontent-btn{
+	width:300px;
+	margin : 10px 10px 0 10px;
+	padding : 4px 20px;
+	border-radius: 20px;
+	color : #6e6e6e;
+	background-color: #f0f2f1;
+	font-weight: bold;
+	cursor: pointer;
+	border: none;
+}
+
+div.respitem{
+	margin-top: 20px;
+	padding-left: 50px;
+}
+
+.rescontent-btn:hover{
+	background-color: #e1e3e2;
+	color: #000000;
+	transition : .2s ease-out;
+	height: 30px;
+}
+
 
 div.paging-button {
 	text-align: right;
