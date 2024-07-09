@@ -134,8 +134,8 @@
 	<!-- 댓글 목록 불러오기 -->
 	<!-- 로그인한 상태에서 클릭한 사람의 정보 읽기, 로그인 하지 않으면 0을 전달한다. -->
 	<select id="selectListReply" parameterType="map" resultType="boardReplyVO">
-	SELECT * FROM (SELECT a.*, rownum rnum FROM (
-		SELECT * 
+	SELECT * FROM (SELECT a.*, rownum rnum FROM ( 
+		SELECT re_num, 	<![CDATA[REPLACE(REPLACE(re_content,'<','&lt;'),'>','&gt;') re_content,]]> re_date, re_mdate, board_num,mem_num,id,nick_name,click_num,refav_cnt,resp_cnt
 			FROM spboard_reply JOIN spmember USING(mem_num)
 			LEFT OUTER JOIN (SELECT re_num, mem_num click_num FROM spreply_fav WHERE mem_num=#{mem_num}) USING(re_num)
 			LEFT OUTER JOIN (SELECT re_num, COUNT(*) refav_cnt FROM spreply_fav GROUP BY re_num) USING(re_num)
@@ -150,4 +150,26 @@
 						VALUES(response_seq.nextval, #{te_content}, #{te_parent_num}, #{te_depth}, #{te_ip}, #{re_num}, #{mem_num})
 	</insert>
 
+
+	<select id="selectListResponse" parameterType="long" resultType="boardResponseVO">
+		SELECT 
+		r.te_num,
+		r.te_content,
+		r.mem_num,
+		a.id,
+		a.nick_name,
+		r.te_date,
+		r.te_ip,
+		r.re_num,
+		r.te_depth,
+		r.te_parent_num,
+		m.id parent_id,
+		m.nick_name pnick_name
+		FROM spboard_response r JOIN spmember a ON r.mem_num=a.mem_num
+		LEFT OUTER JOIN spboard_response s ON r.te_parent_num = s.te_num
+		LEFT OUTER JOIN spmember m ON s.mem_num=m.mem_num
+		WHERE r.re_num = #{re_num}
+		START WITh r.te_depth=0 CONNECT BY PRIOR r.te_num = r.te_parent_num ORDER SIBLINGS BY r.te_num DESC
+	</select>
+ 	
 </mapper>

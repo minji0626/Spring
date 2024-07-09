@@ -86,7 +86,7 @@ $(function() {
 					}
 					if (item.resp_cnt > 0) {
 						output += '<div>'
-						output += '<input type="button" data-status="0" data-num"' + item.re_num + '" value="▲ 답글 ' + item.resp_cnt + '" class="rescontent-btn">'
+						output += '<input type="button" data-status="0" data-num="' + item.re_num + '" value="▲ 답글 ' + item.resp_cnt + '" class="rescontent-btn">'
 						output += '</div>'
 					} else {
 						output += '<input type="button" style="display:none;" data-status="0" data-num="' + item.re_num + '" data-parent="0" data-depth="0" value="▲ 답글 0" class="rescontent-btn">'
@@ -476,13 +476,94 @@ $(function() {
 		event.preventDefault();
 
 	})
+	
+	// 답글 노츨/숨김 버튼 이벤트 처리하기
+	$(document).on('click','.rescontent-btn',function(){
+		// data-status의 값이 0이라면 답글 미표시 상태 1이면 답글 표시 상태
+		if($(this).attr('data-status') == 0){
+			//0이면 답글 미표시 상태이므로 답글이 있으면 답글을 표시한다
+			// 댓글 번호
+			let re_num =$(this).attr('data-num');
+			getListResponse(re_num,$(this).parents('.item'));
+			
+			// 현재 선택한 내용의 답글 표시 아이콘을 토글 형태로 만든다
+			$(this).val($(this).val().replace('▲','▼'));
+			$(this).attr('data-status',1);
+		} else {
+			$(this).val($(this).val().replace('▼','▲'));
+			$(this).attr('data-status',0);
+			// 현재 선택한 내용 삭제하기
+			$(this).parents('.item').find('.respitem').remove();
+		}
+	})
 
 
 
 	/*
 	 *  답글 목록
 	 */
-
+	function getListResponse(re_num, responseUI){
+		// 서버와 통신
+		$.ajax({
+			url:'getListResp',
+			type:'get',
+			data:{re_num:re_num},
+			dataType:'json',
+			success:function(param){
+				// respitem 아이디가 존재한다면 답글을 모두 지운 후 다시 처리한다.
+				responseUI.find('.respitem').remove();
+				let output =''
+				$(param.list).each(function(index,item){
+					output += '<div class="respitem">';
+					output += '<ul class="detail-info">';
+					output += '<li>';
+					if(item.te_parent_num > 0) {
+						if(item.pnick_name){
+							output += '<b> ▶'+item.pnick_name + '</b>';
+						} else {
+							output += '<b> ▶'+item.parent_id + '</b>';
+						}
+					}
+					output += '<img src="../member/viewProfile?mem_num='+ item.mem_num +'" width="30" height="30" class="my-photo">'
+					output += '</li>';
+					
+					output += '<li>';
+					if(item.nick_name){
+						output += item.nick_name + '<br>';
+					} else {
+						output += item.id + '<br>';
+					}
+					
+					if(item.te_mdate){
+						output += '<span class="modify-date"> 최근 수정일 : ' +item.te_mdate + '</span>';
+					} else {
+						output += '<span class="modify-date"> 등록일 : ' +item.te_date + '</span>';
+					}
+					output += '</li>';
+					output += '</ul>';
+					output += '<div class="resp-sub-item">';
+					output += '<p>'+item.te_content.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</p>';
+					
+					if(param.user_num == item.mem_num){
+						output += ' <input type="button" data-num="'+item.te_num+'" data-mem="'+item.mem_num+'" value="수정" class="resp-modify-btn" >'
+						output += ' <input type="button" data-num="'+item.te_num+'" data-rnum="'+item.re_num+'" data-mem="'+item.mem_num+'" value="삭제" class="resp-delete-btn" >'
+					}
+					
+					if(param.user_num){
+						output += ' <input type="button" data-num="'+item.re_num+'" data-parent="'+item.te_num+'" data-depth="'+(item.te_depth+1)+'" value="답글 작성" class="resp-delete-btn" >'
+					}
+					output += '</div>';
+					output += '</div>';
+				})
+				
+				// 문서 객체에 추가하기
+				responseUI.append(output);
+			},
+			error:function(){
+				alert('네트워크 오류가 발생하였습니다.')
+			}
+		})
+	}
 
 
 

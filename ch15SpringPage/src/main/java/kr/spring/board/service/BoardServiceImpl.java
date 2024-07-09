@@ -146,8 +146,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardResponseVO> selectList(Long re_num) {
-		return boardMapper.selectList(re_num);
+	public List<BoardResponseVO> selectListResponse(Long re_num) {
+		return boardMapper.selectListResponse(re_num);
 	}
 
 	@Override

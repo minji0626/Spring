@@ -60,7 +60,7 @@ public interface BoardService {
 
 	public void deleteReFav(BoardReFavVO fav);
 	
-	public List<BoardResponseVO> selectList(Long re_num);
+	public List<BoardResponseVO> selectListResponse(Long re_num);
 	public BoardResponseVO selectResponse(Long te_num);
 	public void insertResponse(BoardResponseVO boardResponse);
 	public void updateResponse(BoardResponseVO boardResponse);
