@@ -163,6 +163,7 @@
 		r.re_num,
 		r.te_depth,
 		r.te_parent_num,
+		r.te_mdate,
 		m.id parent_id,
 		m.nick_name pnick_name
 		FROM spboard_response r JOIN spmember a ON r.mem_num=a.mem_num
@@ -172,4 +173,11 @@
 		START WITh r.te_depth=0 CONNECT BY PRIOR r.te_num = r.te_parent_num ORDER SIBLINGS BY r.te_num DESC
 	</select>
  	
+ 	<!-- 답글 삭제하기 -->
+ 	<delete id="deleteResponse" parameterType="long">
+ 	DELETE FROM spboard_response WHERE te_num IN(
+ 		SELECT te_num FROM spboard_response START WITH te_num=#{te_num}
+ 		CONNECT BY PRIOR te_num = te_parent_num
+ 	)
+ 	</delete>
 </mapper>

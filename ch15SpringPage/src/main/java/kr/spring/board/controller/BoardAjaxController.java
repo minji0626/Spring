@@ -334,4 +334,62 @@ public class BoardAjaxController {
 		return mapJson;
 	}
 	
+	// 답글 수정
+	@PostMapping("/board/updateResponse")
+	@ResponseBody
+	public Map<String, String> modifyResponse(BoardResponseVO boardResponseVO, HttpSession session, HttpServletRequest request) {
+		
+		log.debug("<< 답글 수정 >> : " + boardResponseVO);
+		
+		Map<String, String> mapJson = new HashMap<String, String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		BoardResponseVO db_response = boardService.selectResponse(boardResponseVO.getTe_num());
+		
+		if(user == null) {
+			mapJson.put("result", "logout");
+		} else if( user != null && user.getMem_num() == db_response.getMem_num()) {
+			boardResponseVO.setTe_ip(request.getRemoteAddr());
+			boardService.updateResponse(boardResponseVO);
+			mapJson.put("result", "success");
+		} else {
+			mapJson.put("result", "wrongAccess");
+		}
+		
+		return mapJson;
+	}
+	
+	// 답글 삭제
+		@PostMapping("/board/deleteResponse")
+		@ResponseBody
+		public Map<String, Object> deleteResponse(long te_num, int mem_num, HttpSession session) {
+			
+			log.debug("<< 답글 삭제 - te_num >> : " + te_num);
+			log.debug("<< 답글 삭제 - mem_num >> : " + mem_num);
+			
+			Map<String, Object> mapJson = new HashMap<String, Object>();
+			
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			
+			if(user == null) {
+				mapJson.put("result", "logout");
+			} else if( user != null && user.getMem_num() == mem_num) {
+				// 로그인 회원 번호와 작성자 회원 번호 일치
+				// re_num 구하기
+				BoardResponseVO response = boardService.selectResponse(te_num);
+				
+				// 답글 삭제하기
+				boardService.deleteResponse(te_num);
+				
+				int cnt = boardService.selectResponseCount(response.getRe_num());
+				
+				log.debug(" << 답글 개수 >> : " + cnt);
+				mapJson.put("cnt", cnt);
+				mapJson.put("result", "success");
+			} else {
+				mapJson.put("result", "wrongAccess");
+			}
+			
+			return mapJson;
+		}
 }

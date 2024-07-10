@@ -65,5 +65,6 @@ public interface BoardService {
 	public void insertResponse(BoardResponseVO boardResponse);
 	public void updateResponse(BoardResponseVO boardResponse);
 	public void deleteResponse(Long te_num);
+	public Integer selectResponseCount(Long re_num);
 	
 }

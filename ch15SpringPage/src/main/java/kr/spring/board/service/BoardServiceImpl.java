@@ -169,5 +169,10 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteResponse(Long te_num) {
 		boardMapper.deleteResponse(te_num);
 	}
+
+	@Override
+	public Integer selectResponseCount(Long re_num) {
+		return boardMapper.selectResponseCount(re_num);
+	}
 	
 }

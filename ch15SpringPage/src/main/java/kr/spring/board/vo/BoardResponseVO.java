@@ -19,7 +19,7 @@ public class BoardResponseVO {
 	private long mem_num;
 	
 	private String id;
-	private String nick_num;
+	private String nick_name;
 	private String parent_id;
 	private String parent_name;
 	

@@ -249,3 +249,183 @@ input[type="text"], input[type="password"], textarea {
 #file_detail {
 	margin: 5px 0 0 130px;
 }
+
+/* 게시판 목록
+---------------------*/
+form#search_form #order{
+	height:32px;
+}
+/* 게시판 폼
+---------------------*/
+/*CKEditor 사용시 등록,수정폼*/
+form#board_register, form#board_modify{
+	padding:0 0 10px 0;
+	width:800px;
+}
+form#board_register ul, form#board_modify ul{
+	padding:20px;
+}
+form#board_register input[type="text"], 
+                form#board_modify input[type="text"]{
+	width:759px;
+	margin-bottom: 10px;                
+}
+.ck-editor__editable_inline{/*CKEditor 전용*/
+	min-height:250px;
+}
+/* 게시판 글상세
+---------------------*/
+ul.detail-info{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+ul.detail-info li{
+	margin:0;
+	padding-top:5px;
+	display:inline-block;
+}
+ul.detail-info li:last-child{
+	vertical-align:top;
+}
+.detail-img{
+	max-width:500px;
+}
+.detail-content img{
+	max-width:940px;
+}
+#output_fav, .output_rfav{
+	cursor:pointer;
+}
+#output_fcount{
+	width:50px;
+	display:inline-block;
+}
+div#reply_div{
+	padding:5px 10px 40px 10px;
+	margin-top:10px;
+	background-color:#EEEEEE;
+}
+form#re_form{
+	width:650px;
+	border:none;
+}
+span.re-title{
+	color:#000;
+	font-size:12pt;
+	line-height:200%;
+}
+span.letter-count{
+	font-size:10pt;
+	color:#999;
+}
+textarea.rep-content{
+	width:90%;
+	height:50px;
+	margin:10px;
+}
+div#re_first, div#mre_first, div#mresp_first{
+	float:left;
+	width:70%;
+	padding-left:15px;
+	margin-bottom:10px;
+}
+div#re_second, div#mre_second, div#mresp_second{
+	float:left;
+	width:19%;
+	margin-bottom:10px;
+}
+div#resp_first{
+	float:left;
+	width:70%;
+	padding-left:15px;
+	margin-bottom:10px;
+}
+div#resp_second{
+	float:left;
+	width:26%;
+	margin-bottom:10px;
+}
+div#loading{
+	width:100%;
+	height:50px;
+	display:flex;
+	justify-content:center;/*가로 정렬*/
+	align-items:center;/*세로 정렬*/
+}
+.modify-btn,.delete-btn,.resp-modify-btn,.resp-delete-btn,
+                  .response-btn,.response2-btn,
+                  .paging-button input{
+	margin-left: 10px;
+    padding: 4px 15px;
+    border: 1px solid #f0f2f1;
+    border-radius: 20px;
+    color: #6e6e6e;
+    background-color: #f0f2f1;
+    font-weight: bold;
+    cursor: pointer;
+}
+.modify-btn:hover,.delete-btn:hover,.resp-modify-btn:hover,
+                  .resp-delete-btn:hover,
+                  .response-btn:hover,.response2-btn:hover,
+                  .paging-button input:hover{
+	background-color:#e1e3e2;
+	color:#000000;
+	transition:0.2s ease-out;
+	height:30px;
+}
+.rescontent-btn{
+	width:300px;
+	margin:10px 10px 0 10px;
+	padding:4px 20px;
+	border-radius:20px;
+	color:#6e6e6e;
+	border: 1px solid #f0f2f1;
+	background-color:#f0f2f1;
+	font-weight:bold;
+	cursor:pointer;
+}
+.rescontent-btn:hover{
+	background-color:#e1e3e2;
+	color:#000000;
+	transition:0.2s ease-out;
+	height:30px;
+}
+div.paging-button{
+	text-align:right;
+}
+div#output{
+	clear:both;
+}
+form#mre_form, form#mresp_form{
+	border:none;
+	margin:5px;
+}
+form#resp_form{
+	background-color:#eeeeee;
+	border-radius:20px;
+	border:none;
+	padding:10px 10px 0 10px;
+	margin:10px 5px 5px 5px;
+	height:130px;
+}
+form#resp_form textarea{
+	width:560px;
+}
+div.item{
+	margin-top:10px;
+}
+div.respitem{
+	margin-top:20px;
+	padding-left:50px;
+}
+/* 게시판 글 수정
+---------------------*/
+#file_detail{
+	margin:5px 0 0 130px;
+}
+
+
+
+
+
