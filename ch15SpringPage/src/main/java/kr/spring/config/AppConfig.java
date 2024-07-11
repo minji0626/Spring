@@ -44,7 +44,10 @@ public class AppConfig implements WebMvcConfigurer{
 										   .addPathPatterns("/member/delete")
 										   .addPathPatterns("/board/write")
 										   .addPathPatterns("/board/update")
-										   .addPathPatterns("/board/delete");
+										   .addPathPatterns("/board/delete")
+										   .addPathPatterns("/talk/talkRoomWrite")
+										   .addPathPatterns("/talk/talkList")
+										   .addPathPatterns("/talk/talkDetail");
 		
 		// Writer Check Interceptor 설정하기
 		registry.addInterceptor(writerCheck).addPathPatterns("/board/update")
@@ -59,7 +62,8 @@ public class AppConfig implements WebMvcConfigurer{
 		configurer.setDefinitions(new String[] {
 				"/WEB-INF/tiles-def/main.xml",
 				"/WEB-INF/tiles-def/member.xml",
-				"/WEB-INF/tiles-def/board.xml"
+				"/WEB-INF/tiles-def/board.xml",
+				"/WEB-INF/tiles-def/talk.xml"
 		});
 		configurer.setCheckRefresh(true);
 		return configurer;

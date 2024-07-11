@@ -1,0 +1,123 @@
+@charset "UTF-8";
+/* 채팅방 생성
+--------------------------------*/
+#talk_member{
+   	margin-top:15px;
+   	padding:10px;
+}
+.member-span{
+	background-color:#CCC;
+	border-radius:15px;
+	padding:7px;
+	margin:20px;
+	cursor: pointer;
+	display:inline-block;
+	min-width:60px;
+}
+
+.member-span > sup{
+	border-radius:50%;
+	display:inline-block;
+	width:25px;
+	height:10px;
+	text-align:center;
+	padding-bottom:15px;
+	margin-left:5px;
+	background-color:#FFF;
+}
+ul#search_area{
+	padding:0;
+	width:348px;
+	margin-left:114px;
+	border-left:1px solid black;
+	border-right:1px solid black; 
+	position: absolute;
+	background-color:#FFF;
+}
+ul#search_area li{
+	padding:8px;
+	cursor: pointer;
+	border-bottom:1px solid black; 
+}
+
+/* 채팅하기
+--------------------------------*/
+#chatting_message{
+	border:1px solid black;
+	width:660px;
+	height:300px;
+	margin:0 auto;
+	padding:10px;
+	overflow:auto;
+}
+.date-position{
+	text-align:center;
+	
+}
+.date-position span{
+    display:inline-block;
+	width:300px;
+	height:20px;
+	border-radius:10px;	
+	background-color:#f2efef;
+}
+.from-position{
+	width:300px;
+	margin:10px 0 10px 330px;
+}
+
+.from-position .item{
+	background-color:yellow;
+	padding:10px;
+	min-height:50px;	
+	border-radius: 20px;
+	border-top-right-radius:0;	
+}
+.to-position{
+	width:300px;
+	margin:10px 0 10px 0;
+}
+.to-position .item{
+	background-color:pink;
+	padding:10px;
+	min-height:50px;
+	border-radius: 20px;
+	border-top-left-radius:0;
+}
+
+.to-position div.space-photo{
+	float:left;
+	width:15%;
+}
+.to-position div.space-message{
+	float:left;
+	width:85%;
+}
+
+.to-position div.space-clear{
+	clear:both;
+}
+.member-message{
+	width:230px;
+	min-height:24px;
+	border-radius:10px;
+	background-color:#eee;
+	margin:10px auto;
+	text-align:center;
+	padding:8px 4px;
+	clear:both;
+}
+form#detail_form{
+	margin-top:5px;
+	border:none;
+	width:682px;
+	padding:0;
+	overflow:hidden;
+}
+#message{
+	width:100%;
+	margin:0;
+}
+#message_btn input{
+	width:100%;
+}
