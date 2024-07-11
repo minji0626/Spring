@@ -1,5 +1,7 @@
 package kr.spring.member.service;
 
+import java.util.List;
+
 import kr.spring.member.vo.MemberVO;
 
 public interface MemberService {
@@ -25,4 +27,6 @@ public interface MemberService {
 	public void updateRandomPassword(MemberVO member);
 
 	public void updateProfile(MemberVO member);
+	
+	public List<MemberVO> selectSearchMember(String id);
 }

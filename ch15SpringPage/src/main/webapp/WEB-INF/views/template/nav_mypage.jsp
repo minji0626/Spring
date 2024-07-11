@@ -20,7 +20,10 @@
 	
 	<ul>
 		<li>
-		<input type="button" class="menu-btn" value="비밀번호 변경" onclick="location.href='changePassword'">
+		<input type="button" class="menu-btn" value="비밀번호 변경" onclick="location.href='${pageContext.request.contextPath}/member/changePassword'">
+		</li>
+		<li>
+		<input type="button" class="menu-btn" value="채팅" onclick="location.href='${pageContext.request.contextPath}/talk/talkList'">
 		</li>
 		<li>
 		<input type="button" class="menu-btn" value="회원 탈퇴" onclick="location.href='delete'">
