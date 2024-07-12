@@ -31,6 +31,15 @@ public class TalkServiceImpl implements TalkService{
 
 	@Override
 	public void insertTalkRoom(TalkRoomVO talkRoomVO) {
+		// 기본 키 값 생성
+		talkRoomVO.setTalkroom_num(talkMapper.selectTalkRoomNum());
+		// 채팅방 생성
+		talkMapper.insertTalkRoom(talkRoomVO);
+		// 채팅방 멤버 생성
+		for(Long mem_num : talkRoomVO.getMembers()) {
+			talkMapper.insertTalkRoomMember(talkRoomVO.getTalkroom_num(), talkRoomVO.getBasic_name(), mem_num);
+		}
+		
 		
 	}
 
