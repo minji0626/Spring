@@ -3,7 +3,53 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 
-<!-- interface명칭과 xml의 명칭이 동일해야 한다 -->
 <mapper namespace="kr.spring.talk.dao.TalkMapper">
+	
+	<resultMap type="talkRoomVO" id="talkMap">
+		<result property="talkVO.message" column="message"/>
+		<result property="talkVO.chat_date" column="chat_date"/>
+		<result property="talkMemberVO.room_name" column="room_name"/>
+	</resultMap>
+	
+	
+	<sql id="talkSub">
+		FROM sptalkroom r JOIN sptalk_member m USING(talkroom_num)
+		LEFT OUTER JOIN (SELECT talkroom_num, mem_num, COUNT(*) room_cnt 
+			FROM sptalk_read WHERE mem_num=#{mem_num}
+			GROUP BY talkroom_num,mem_num) e 
+		USING(talkroom_num)
+		LEFT OUTER JOIN (SELECT talk_num, <![CDATA[
+			REPLACE(REPLACE(REPLACE(message,'<','&lt;'),'>','&gt;'),'@{member}@','') message,
+			]]>chat_date, talkroom_num
+			FROM sptalk 
+				WHERE talk_num IN (SELECT MAX(talk_num) talk_num 
+									FROM sptalk GROUP BY talkroom_num))
+		USING(talkroom_num)
+		WHERE m.mem_num = #{mem_num}
+		<if test="keyword != null and keyword != ''">
+			AND room_name LIKE '%' || #{keyword} || '%'
+		</if>
+	</sql>
+	
+	<!-- From 부터는 talksub에 있기 때문에 COUNT 까지 작성 -->
+	<select id="selectRowCount" parameterType="map" resultType="integer">
+		SELECT COUNT(*)
+		<include refid="talkSub"></include>
+	</select>
+	
+	<!-- 채팅방 목록 -->
+	<select id="selectTalkRoomList" parameterType="map" resultMap="talkMap">
+		SELECT
+			*
+		FROM (SELECT a.*,rownum rnum FROM (
+				SELECT * <include refid="talkSub"></include> ORDER BY chat_date DESC)a)
+		<![CDATA[WHERE rnum >= #{start} AND rnum <= #{end}]]>
+	</select>
+	
+	<select id="selectTalkMember" parameterType="long" resultType="talkMemberVO">
+		SELECT mem_num, id,room_name
+		FROM sptalk_member
+		JOIN spmember USING(mem_num) WHERE talkroom_num = #{talkroom_num}	
+	</select>
 	
  </mapper>

@@ -30,7 +30,7 @@ public interface TalkMapper {
 	public void insertTalkRoomMember(@Param(value="talkroom_num") Long talkroom_num,@Param(value="room_name") String room_name,@Param(value="mem_num") Long mem_num);
 	
 	// 채팅방 멤버 읽기 
-	public List<TalkMemberVO> selectTalkmember(Long talkroom_num);
+	public List<TalkMemberVO> selectTalkMember(Long talkroom_num);
 	
 	// 채팅 메세지 번호 생성하기
 	public Integer selectTalkNum();
