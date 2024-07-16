@@ -52,4 +52,19 @@
 		JOIN spmember USING(mem_num) WHERE talkroom_num = #{talkroom_num}	
 	</select>
 	
+	<!-- 채팅 메세지 읽기 -->
+	<!-- 멤버 등록일 이후의 정보만 읽어올 수 있도록 날짜 지정해줌 -->
+	<select id="selectTalkDetail" parameterType="long" resultType="talkVO">
+		SELECT
+			<![CDATA[
+				REPLACE(REPLACE(message,'<','&lt;'),'>','&gt;') message,
+			]]>
+			chat_date, read_count,mem_num,id FROM sptalk 
+			LEFT OUTER JOIN(SELECT talk_num, COUNT(*) read_count FROM sptalk_read GROUP BY talk_num)
+			USING(talk_num)
+			JOIN spmember USING(mem_num)
+			WHERE talkroom_num = #{talkroom_num} 
+			AND chat_date >= (SELECT member_date FROM sptalk_member WHERE talkroom_num=#{talkroom_num} AND mem_num=#{mem_num})
+		ORDER BY chat_date ASC
+	</select>
  </mapper>

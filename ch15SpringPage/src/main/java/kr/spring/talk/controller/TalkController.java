@@ -150,6 +150,56 @@ public class TalkController {
 		return "talkDetail";
 	}
 	
+	//채팅 메세지 전송
+	@PostMapping("/talk/writeTalk")
+	@ResponseBody
+	public Map<String, String> writeTalkAjax(TalkVO vo, HttpSession session){
+		
+		log.debug("<< 채팅 메세지 전송 >> : " + vo);
+		
+		Map<String, String> mapAjax = new HashMap<String, String>();
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		
+		if(user == null) {
+			// 로그인이 되지 않은 경우
+			mapAjax.put("result","logout");
+		} else {
+			// 로그인이 된 경우
+			vo.setMem_num(user.getMem_num());
+			// 메세지 등록
+			talkService.insertTalk(vo);
+			
+			mapAjax.put("result", "success");
+		}
+		
+		return mapAjax;
+	}
+	
+	// 채팅 메세지 읽기
+	@GetMapping("/talk/talkDetailAjax")
+	@ResponseBody
+	public Map<String, Object> talkDetailAjax(Long talkroom_num, HttpSession session){
+		
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user== null) {
+			mapJson.put("result", "logout");
+		} else {
+			Map<String, Long> map = new HashMap<String, Long>();
+			map.put("talkroom_num", talkroom_num);
+			map.put("mem_num", user.getMem_num());
+			
+			List<TalkVO> list = talkService.selectTalkDetail(map);
+			
+			mapJson.put("result", "success");
+			mapJson.put("list", list);
+			mapJson.put("user_num", user.getMem_num());
+		}
+		
+		return mapJson;
+	}
+	
 
 	//초대한 회원의 id 구하기
 	private String findMemberId(TalkRoomVO vo,MemberVO user) {
