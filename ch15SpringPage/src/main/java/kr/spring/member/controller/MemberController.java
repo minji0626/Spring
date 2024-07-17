@@ -2,7 +2,9 @@ package kr.spring.member.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -94,7 +96,24 @@ public class MemberController {
 			// true 라면 if(check) 내부로 진입함
 			if(check) { // 인증 성공
 				// 자동 로그인 체크 시작
-				
+				boolean autoLogin = memberVO.getAuto() != null && memberVO.getAuto().equals("on");
+				if(autoLogin) {
+					// 자동 로그인을 체크한 경우
+					String au_id = member.getAu_id();
+					
+					if(au_id == null) {
+						// 자동 로그인 체크 식별값을 생성해준다.
+						au_id = UUID.randomUUID().toString();	// 랜덤 값으로 생성해줌
+						log.debug(" << au_id >>  : " + au_id);
+						member.setAu_id(au_id);
+						memberService.updateAu_id(member.getAu_id(), member.getMem_num());
+					}
+					Cookie auto_cookie = new Cookie("au-log", au_id);
+					auto_cookie.setMaxAge(60*60*24*7);	// 쿠키의 유효기간은 일주일로 설정
+					auto_cookie.setPath("/");
+					
+					response.addCookie(auto_cookie);
+				}
 				// 자동 로그인 체크 종료
 				
 				// 멤버 확인하여 로그인 처리
@@ -132,12 +151,16 @@ public class MemberController {
 	
 	// 로그아웃 처리하기
 	@GetMapping("/member/logout")
-	public String processLogout(HttpSession session) {
+	public String processLogout(HttpSession session, HttpServletResponse response) {
 		// 로그아웃 처리
 		session.invalidate();
 		
 		// 자동 로그인 처리 해제 시작
+		Cookie auto_cookie = new Cookie("au-log", "");
+		auto_cookie.setMaxAge(0);	// 쿠키 삭제하기
+		auto_cookie.setPath("/");
 		
+		response.addCookie(auto_cookie);
 		// 자동 로그인 처리 해제 종료
 		
 		log.debug("<< 로그아웃이 완료되었습니다! >>");

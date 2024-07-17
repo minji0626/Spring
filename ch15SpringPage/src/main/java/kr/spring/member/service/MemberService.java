@@ -20,7 +20,7 @@ public interface MemberService {
 
 	public void updateAu_id(String au_id, Long mem_num);
 
-	public void selectAu_id(String au_id);
+	public MemberVO selectAu_id(String au_id);
 
 	public void deleteAu_id(Long mem_num);
 

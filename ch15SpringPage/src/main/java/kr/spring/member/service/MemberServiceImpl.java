@@ -52,17 +52,17 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void updateAu_id(String au_id, Long mem_num) {
-		
+		memberMapper.updateAu_id(au_id, mem_num);
 	}
 
 	@Override
-	public void selectAu_id(String au_id) {
-		
+	public MemberVO selectAu_id(String au_id) {
+		return memberMapper.selectAu_id(au_id);
 	}
 
 	@Override
 	public void deleteAu_id(Long mem_num) {
-		
+		memberMapper.deleteAu_id(mem_num);
 	}
 
 	@Override

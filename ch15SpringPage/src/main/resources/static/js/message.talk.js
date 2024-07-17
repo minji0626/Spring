@@ -23,7 +23,28 @@ $(function(){
 		웹 소켓 연결	
 	--------------------------*/
 	function connectWebSocket() {
+		message_socket = new WebSocket('ws://localhost:8000/message-ws');	// appconfig에서 지정한 식별자로 맞춰주기 message-ws
+		message_socket.onopen=function(evt){
+			console.log('채팅 페이지 : 접속' + $('#talkDetail').length);
+			if($('#talkDetail').length == 1) {
+				message_socket.send('msg');
+			} // end of if
+		};
+		// 서버로부터 메세지를 받으면 호출 되는 함수를 지정한다.
+		message_socket.onmessage=function(evt){
+			// 메세지 읽기
+			// msg 안에 data가 들어있음
+			let data = evt.data;
+			// talkdetail의 길이가 1이면서, data의 시작부터 3까지의 문자가 msg 라는 조건을 준다
+			if($('#talkDetail').length == 1 && data.substring(0,3) == 'msg') {
+				selectMsg();	
+			}
+		};
 		
+		message_socket.onclose=function(evt){
+			// 소켓이 종료된 후 부과적인 작성이 있을 경우 작성
+			console.log('chat close');
+		}
 	}
 	
 	
@@ -210,7 +231,7 @@ $(function(){
 					});	
 				}else{
 					alert('채팅 메시지 읽기 오류 발생');	
-					/*message_socket.close();*/
+					message_socket.close();
 				}
 			},
 			error:function(){
@@ -250,17 +271,20 @@ $(function(){
 			dataType:'json',
 			success: function(param){
 				if(param.result == 'logout'){
-					alert('로그인 후 사용 가능합ㅁ니다.')
+					alert('로그인 후 사용 가능합니다.');
+					message_socket.close();
 				} else if (param.result == 'success'){
 					// 폼 초기화
 					$('#message').val('').focus();
-					selectMsg();
+					message_socket.send('msg');
 				} else {
-					alert('채팅 전송 중 오류가 발생하였습니다.')
+					alert('채팅 전송 중 오류가 발생하였습니다.');
+					message_socket.close();
 				}
 			},
 			error : function(){
-				alert('네트워크 오류가 발생하였습니다.')
+				alert('네트워크 오류가 발생하였습니다.');
+				message_socket.close();
 			}
 			
 		});
@@ -268,8 +292,5 @@ $(function(){
 		// 기본 이벤트 제거
 		event.preventDefault();
 	});
-	
-	selectMsg();
-	
 	
 });

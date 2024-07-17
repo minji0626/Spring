@@ -57,7 +57,7 @@ public class TalkServiceImpl implements TalkService{
 		talkMapper.insertTalk(talkVO);
 		// 채팅방 멤버가 읽지 않은 정보 저장
 		for(TalkMemberVO vo : talkMapper.selectTalkMember(talkVO.getTalkroom_num())) {
-			talkMapper.insertTalkRead(talkVO.getTalkroom_num(), talkVO.getTalk_num(), talkVO.getMem_num());
+			talkMapper.insertTalkRead(talkVO.getTalkroom_num(), talkVO.getTalk_num(), vo.getMem_num());
 		}
 	}
 

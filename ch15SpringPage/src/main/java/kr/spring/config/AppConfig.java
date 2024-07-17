@@ -7,16 +7,30 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
+import kr.spring.interceptor.AutoLoginCheckInterceptor;
 import kr.spring.interceptor.LoginCheckInterceptor;
 import kr.spring.interceptor.WriterCheckInterceptor;
+import kr.spring.websocket.SocketHandler;
 
 // 자바코드 기반 설정 클래스
 @Configuration
-public class AppConfig implements WebMvcConfigurer{
+@EnableWebSocket
+public class AppConfig implements WebMvcConfigurer, WebSocketConfigurer{
 	
+	private AutoLoginCheckInterceptor autoLoginCheck;
 	private LoginCheckInterceptor loginCheck;
-	private  WriterCheckInterceptor writerCheck;
+	private WriterCheckInterceptor writerCheck;
+	
+	@Bean
+	public AutoLoginCheckInterceptor interceptor() {
+		autoLoginCheck = new AutoLoginCheckInterceptor();
+		
+		return autoLoginCheck;
+	}
 	
 	@Bean
 	public LoginCheckInterceptor interceptor2() {
@@ -33,6 +47,16 @@ public class AppConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
+		
+		registry.addInterceptor(autoLoginCheck).addPathPatterns("/**")
+											   .excludePathPatterns("/images/**")
+											   .excludePathPatterns("/image_upload/**")
+											   .excludePathPatterns("/upload/**")
+											   .excludePathPatterns("/css/**")
+											   .excludePathPatterns("/js/**")
+											   .excludePathPatterns("/member/login")
+											   .excludePathPatterns("/member/logout");		
+		
 		// 인터셉터 등록하기
 		// login check 하는 인터셉터 등록 
 		// .addPathPatterns > 이걸로 다양한 페이지들을 등록하여 인터셉터를 등록해주는 것
@@ -75,5 +99,11 @@ public class AppConfig implements WebMvcConfigurer{
 		tilesViewResolver.setViewClass(TilesView.class);
 		
 		return tilesViewResolver;
+	}
+	
+	// 웹소켓 세팅하기
+	@Override
+	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+		registry.addHandler(new SocketHandler(), "message-ws").setAllowedOrigins("*");
 	}
 }

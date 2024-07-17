@@ -37,14 +37,17 @@ public interface MemberMapper {
 	public void updatePassword(MemberVO member);
 	
 	@Delete("DELETE FROM spmember WHERE mem_num = #{mem_num}")
-	public void deleteMember(Long mem_num);
+	public void deleteMember(Long mem_num); 
 	
 	@Delete("DELETE FROM spmember_detail WHERE mem_num=#{mem_num}")
 	public void deleteMember_detail(Long mem_num);
 	
 	// 자동 로그인 처리
+	@Update("UPDATE spmember_detail SET au_id=#{au_id} WHERE mem_num=#{mem_num}")
 	public void updateAu_id(String au_id, Long mem_num);
-	public void selectAu_id(String au_id);
+	@Select("SELECT m.mem_num,m.id,m.auth,d.au_id,d.passwd,m.nick_name,d.email FROM spmember m JOIN spmember_detail d ON m.mem_num = d.mem_num WHERE d.au_id=#{au_id}")
+	public MemberVO selectAu_id(String au_id);
+	@Update("UPDATE spmember_detail set au_id='' WHERE mem_num=#{mem_num}")
 	public void deleteAu_id(Long mem_num);
 	
 	
