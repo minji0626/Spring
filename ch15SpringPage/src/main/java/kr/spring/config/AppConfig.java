@@ -124,8 +124,8 @@ public class AppConfig implements WebMvcConfigurer, WebSocketConfigurer{
     	javaMail.setHost("smtp.gmail.com");
     	javaMail.setPort(587);
     	javaMail.setDefaultEncoding("utf-8");
-    	javaMail.setUsername("movie.cineverse@gmail.com");
-    	javaMail.setPassword("aqmjslsdwaxrliaf");
+    	javaMail.setUsername("자기 자신의 이메일");
+    	javaMail.setPassword("앱 비밀번호");
     	javaMail.setJavaMailProperties(prop);
     	return javaMail;
     }
