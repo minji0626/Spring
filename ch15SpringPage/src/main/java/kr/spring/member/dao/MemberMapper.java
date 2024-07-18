@@ -52,6 +52,7 @@ public interface MemberMapper {
 	
 	
 	// 비밀번호 찾기
+	@Update("UPDATE spmember_detail SET passwd=#{passwd} WHERE mem_num=#{mem_num}")
 	public void updateRandomPassword(MemberVO member);
 	
 	// 플필 이미지 업데이트

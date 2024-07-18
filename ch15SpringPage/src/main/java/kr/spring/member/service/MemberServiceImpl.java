@@ -67,7 +67,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void updateRandomPassword(MemberVO member) {
-		
+		memberMapper.updateRandomPassword(member);
 	}
 
 	@Override

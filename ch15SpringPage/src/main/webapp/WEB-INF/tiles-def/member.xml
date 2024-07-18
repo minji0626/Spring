@@ -39,5 +39,12 @@
 		<put-attribute name="body" value="/WEB-INF/views/member/memberChangePassword.jsp" />
 	</definition>
 	
+	<!-- 임시 비밀번호 이메일 전송하기 -->
+	<definition name="memberFindPassword" extends="main">
+		<put-attribute name="title" value="임시 비밀번호 이메일 전송"/>
+		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/member/memberFindPassword.jsp" />
+	</definition>
+	
 	
 </tiles-definitions>

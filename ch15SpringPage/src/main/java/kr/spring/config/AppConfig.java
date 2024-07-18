@@ -1,7 +1,10 @@
 package kr.spring.config;
 
+import java.util.Properties;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
@@ -106,4 +109,24 @@ public class AppConfig implements WebMvcConfigurer, WebSocketConfigurer{
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		registry.addHandler(new SocketHandler(), "message-ws").setAllowedOrigins("*");
 	}
+	
+	
+	@Bean
+    public JavaMailSenderImpl javaMailSenderImpl() {
+    	Properties prop = new Properties();
+    	prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+    	prop.put("mail.smtp.starttls.enable", "true");
+    	prop.put("mail.transport.protocol", "smtp");
+    	prop.put("mail.smtp.auth", "true");
+    	prop.put("mail.debug", "true");
+    	
+    	JavaMailSenderImpl javaMail = new JavaMailSenderImpl();
+    	javaMail.setHost("smtp.gmail.com");
+    	javaMail.setPort(587);
+    	javaMail.setDefaultEncoding("utf-8");
+    	javaMail.setUsername("movie.cineverse@gmail.com");
+    	javaMail.setPassword("aqmjslsdwaxrliaf");
+    	javaMail.setJavaMailProperties(prop);
+    	return javaMail;
+    }
 }

@@ -25,6 +25,8 @@ import kr.spring.util.AuthCheckException;
 import kr.spring.util.CaptchaUtil;
 import kr.spring.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Slf4j
 @Controller
@@ -378,5 +380,13 @@ public class MemberController {
 		
 		return "imageView";
 	}
+	
+	
+	// 비밀번호 찾기
+	@GetMapping("/member/sendPassword")
+	public String sendPasswordForm() {
+		return "memberFindPassword";
+	}
+	
 	
 }
